@@ -1,0 +1,68 @@
+﻿body {
+}
+
+#index-div {
+    width: 80%;
+    margin-left:10%;
+    padding-top: 60px;
+    /*background: white;*/ /* For browsers that do not support gradients */
+    /*background: -webkit-linear-gradient(gray, white);*/ /* For Safari 5.1 to 6.0 */
+    /*background: -o-linear-gradient(gray, white);*/  /*For Opera 11.1 to 12.0 */
+    /*background: -moz-linear-gradient(gray, white);*/ /* For Firefox 3.6 to 15 */
+    /*background: linear-gradient(gray, white);*/ /* Standard syntax */
+
+}
+#back-index{
+    background: white; 
+    background: -webkit-linear-gradient(gray, white); 
+    background: -o-linear-gradient(gray, white); 
+    background: -moz-linear-gradient(gray, white); 
+    background: linear-gradient(gray, white);
+}
+#carousel-example-generic {
+    position:relative;
+    width:auto;
+}
+
+#news {
+    height: 45px;
+    margin-top: 15px;
+    background-color: yellowgreen;
+}
+
+#form-search-news{
+    font-size-adjust:0.9;
+    position:relative;
+    margin-top: -32px;
+    margin-left: 60%;
+}
+
+#news-h5 {
+    position:relative;
+    padding-top: 2px;
+    margin-left: 10px;
+}
+.img-slide{
+    position:relative;
+    margin:auto;
+}
+
+#news-list{
+    height: 400px;
+    margin-top: 15px;
+    background-color: yellowgreen;
+    opacity:0.4;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}

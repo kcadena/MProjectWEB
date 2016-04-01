@@ -13,7 +13,13 @@ namespace MProjectWeb.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            ViewData["Title"] = "Mproject";
             return View();
+        }
+
+        public string GetNames()
+        {
+            return "kelvin cadena";
         }
     }
 }

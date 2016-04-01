@@ -1,0 +1,75 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" asp-controller="Index" asp-action="Index"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">About</a></li>
+                </ul>
+                <div class="navbar-right" style="margin-top:9px;margin-bottom:5px">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-default">Sign in</a>
+                    <a asp-controller="Account" asp-action="Register"  class="btn btn-success">Sign up</a>
+
+
+
+                    @*<button type="button" class="btn btn-default btn-sm" id="btn_log">Login</button>
+                    <button type="button" class="btn btn-default btn-sm" id="btn_reg">Register</button>*@
+
+
+
+                </div>
+            </div>
+
+            <!--/.nav-collapse -->
+        </div>
+
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    @*<div class="jumbotron">
+            <h1>Bootrstrap</h1>
+
+        </div>*@
+
+
+    <div>
+
+
+        @Html.Partial("~/views/Account/ModalAccount.cshtml")
+        @RenderBody()
+    </div>
+
+
+
+
+
+</body>
+<script src="~/js/a.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</html>
