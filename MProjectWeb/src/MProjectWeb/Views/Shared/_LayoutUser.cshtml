@@ -1,4 +1,7 @@
-﻿@*@RenderBody()*@
+﻿@using Microsoft.AspNet.Http;
+@using Newtonsoft.Json.Linq;
+@using Newtonsoft.Json;
+
 
 
 <!DOCTYPE html>
@@ -69,38 +72,7 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">
-                                            <strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">
-                                            <strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+
                         <li class="message-footer">
                             <a href="#">Read All New Messages</a>
                         </li>
@@ -112,29 +84,15 @@
                         <li>
                             <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
                         </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                        @Context.Session.GetString("UsuNam")
+                        <b class="caret"></b>
+                    </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -147,7 +105,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a asp-controller="Index" asp-action="LogOut"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -155,54 +113,100 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                    </li>
-                    <li class="active">
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+
+                    @{
+                        JObject op = JsonConvert.DeserializeObject<JObject>(Context.Session.GetString("op"));
+                        foreach (var x in op.GetValue("menu"))
+                        {
+
+                            String con = (string)x.ElementAt(0).ElementAt(0).ElementAt(1).First().First();
+                            String act = (string)@x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
+
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a style="color:darkgray"
+                                   href=""
+                                   data-toggle="collapse" data-target="#op_@act"
+                                   id="@act">
+                                    @x.ElementAt(0).ElementAt(0).ElementAt(0).First().First()
+                                </a>
+
+                                <ul id="op_@act" class="collapse">
+                                    <li>
+                                        <a>a</a>
+                                    </li>
+                                    <li>
+                                        <a>b</a>
+                                    </li>
+                                    <li>
+                                        <a>c</a>
+                                    </li>
+                                </ul>
+
                             </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>
+                        }
+                    }
                     <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                        <a asp-controller="Projects" asp-action="Index" class="abt"><i class="fa fa-fw fa-dashboard"></i> About</a>
                     </li>
+
                     <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                        <a asp-controller="index" asp-action="Index" class="abt"><i class="fa fa-fw fa-dashboard"></i>Mproject Web</a>
                     </li>
+
+
                 </ul>
             </div>
+
             <!-- /.navbar-collapse -->
         </nav>
-    </div>
+        <div id="page-wrapper">
 
-    @RenderBody()
+            <div class="container-fluid"  id="asd" >
+
+                @RenderBody()
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+    </div>
 
 </body>
 <!-- /#wrapper -->
 <!-- jQuery -->
 <script src="~/lib/jquery/dist/jquery.js"></script>
-
+<script src="~/js/a.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </html>
+
+
+@{
+    foreach (var x in op.GetValue("menu"))
+    {
+        String con = (string)x.ElementAt(0).ElementAt(0).ElementAt(1).First().First();
+        String act = (string)@x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
+        <script>
+            $("#@act").click(function () {
+                $.ajax({
+
+                    url: '',
+                    type: 'text',
+                    success: function (data) {
+                        //alert("ok");
+                        $("#asd").load('/@con/@act');
+                        //alert("asd");
+                    }
+                    });
+
+
+
+            });
+            @*@{Context.Session.SetString("opx", act); }*@
+
+
+
+        </script>
+    }
+
+
+}

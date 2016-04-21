@@ -1,10 +1,17 @@
 ﻿$(document).ready(function () {
-    $("#btn_log").click(function () {
+    $(".btn_log").click(function () {
+        //alert("Has escrito: " + $("#TextBox1").val());
+        $("#modal_reg").modal("hide");
         $("#modal_log").modal();
     });
-});
-$(document).ready(function () {
-    $("#btn_reg").click(function () {
+
+
+
+    $(".btn_reg").click(function () {
+        //alert("Has escrito: " + $("#TextBox1").val());
+        $("#modal_log").modal("hide");
         $("#modal_reg").modal();
     });
 });
+
+

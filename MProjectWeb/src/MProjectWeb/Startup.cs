@@ -17,7 +17,17 @@ namespace MProjectWeb
         {
             services.AddEntityFramework();
             services.AddRouting();
-            
+            services.AddCaching(); // Adds a default in-memory implementation of IDistributedCache
+            services.AddSession(
+                options =>
+                {
+                    options.IdleTimeout = TimeSpan.FromMinutes(30);
+                    options.CookieName = ".MyApplication";
+                    //options.CookieName = ".AdventureWorks.Session";
+                    //options.IdleTimeout = TimeSpan.FromSeconds(10);
+                }
+                );
+           
             services.AddMvc();
         }
 
@@ -25,9 +35,9 @@ namespace MProjectWeb
         public void Configure(IApplicationBuilder app)
         {
             app.UseIISPlatformHandler();
-
             app.UseStaticFiles();
-
+            app.UseSession();
+            //app.UseDirectoryBrowser();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
