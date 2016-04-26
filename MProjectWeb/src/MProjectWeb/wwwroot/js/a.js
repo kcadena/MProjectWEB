@@ -70,12 +70,12 @@ function projectsClick(dat) {
         cache: false,
         beforeSend: function () {
 
-            $("#content-opt").html("");
-            $("#content-opt").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
+            $("#panel_prj").html("");
+            $("#panel_prj").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
         },
         success: function succ(data) {
             //alert(con + "  " + act);
-            $("#content-opt").load('/' + con + '/' + act);
+            $("#panel_prj").html(data);
 
         }
     });

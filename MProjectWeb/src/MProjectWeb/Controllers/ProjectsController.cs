@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Http;
+using MProjectWeb.Models.DBControllers;
 
+using Newtonsoft.Json;
 
 using MProjectWeb.Models.Sqlite;
-using MProjectWeb.Models.DBControllers;
 
 using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
@@ -45,6 +46,13 @@ namespace MProjectWeb.Controllers
             return View();
         }
 
+        //==========================================       VIEWS HELP       ===============================================//
+
+        public IActionResult PanelProject(string dat)
+        {
+            ViewBag.pj = dat;
+            return View();
+        }
 
         //==========================================   VISTAS SUBOPCIONES   ===============================================//
         public IActionResult Activity()
