@@ -19,13 +19,13 @@ namespace MProjectWeb
             services.AddRouting();
             services.AddCaching(); // Adds a default in-memory implementation of IDistributedCache
             services.AddSession(
-                options =>
-                {
-                    options.IdleTimeout = TimeSpan.FromMinutes(30);
-                    options.CookieName = ".MyApplication";
-                    //options.CookieName = ".AdventureWorks.Session";
-                    //options.IdleTimeout = TimeSpan.FromSeconds(10);
-                }
+                //options =>
+                //{
+                //    options.IdleTimeout = TimeSpan.FromMinutes(30);
+                //    options.CookieName = ".MyApplication";
+                //    //options.CookieName = ".AdventureWorks.Session";
+                //    //options.IdleTimeout = TimeSpan.FromSeconds(10);
+                //}
                 );
            
             services.AddMvc();

@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNet.Http;
+@using Newtonsoft.Json.Linq;
+@using Newtonsoft.Json;
+@using MProjectWeb.Models.DBControllers;
+@{
+    JObject op = JsonConvert.DeserializeObject<JObject>(Context.Session.GetString("op"));
+
+    //genera el javascript de clicks de las opciones principales
+    foreach (var x in op.GetValue("menu"))
+    {
+        String con = (string)x.ElementAt(0).ElementAt(0).ElementAt(1).First().First();
+        String act = (string)x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
+        int sub_ops = x.Last.First.Count();
+        JToken pas = x.Last.First();
+        <script>
+            $("#@act").click(function () {
+                callOpt("@con", "@act",1);
+            });
+        </script>
+        //genera el javascript de clicks de las subopciondes
+        for (int i = 0; i < sub_ops; i++)
+        {
+            string sub_op = pas.ElementAt(i).First.First.Last.First.First.ToString();
+            <script>
+                $("#@sub_op").click(function () {
+                    callOpt("@con", "@sub_op",0);
+                });
+            </script>
+        }
+    }
+}

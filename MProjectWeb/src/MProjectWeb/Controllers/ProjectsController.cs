@@ -26,13 +26,63 @@ namespace MProjectWeb.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            DBCProjects h = new DBCProjects();
+            try
+            {
+                long user = Convert.ToInt64(HttpContext.Session.GetString("UsuID"));
+                var x = h.listProjectsUsers(user);
+                TempData["prj"] = x;
+            }
+            catch { }
             HttpContext.Session.SetString("op", webOptions().ToString());
             return View();
         }
         public IActionResult Projects()
         {
+            DBCProjects h = new DBCProjects();
+            long user = Convert.ToInt64( HttpContext.Session.GetString("UsuID"));
+            ViewBag.projects = h.listProjectsUsers(user);
             return View();
         }
+
+
+        //==========================================   VISTAS SUBOPCIONES   ===============================================//
+        public IActionResult Activity()
+        {
+            return View();
+        }
+
+        public IActionResult Files()
+        {
+            return View();
+        }
+        public IActionResult Georeference()
+        {
+            return View();
+        }
+        public IActionResult Charts()
+        {
+            return View();
+        }
+        public IActionResult Olders()
+        {
+            return View();
+        }
+        public IActionResult Publishes()
+        {
+            return View();
+        }
+        public IActionResult Roles()
+        {
+            return View();
+        }
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+
+        //=====================================   METODOS/FUNCIONES AUXILIARES   ==========================================//
         private JObject webOptions()
         {
             /*

@@ -1,7 +1,13 @@
 ﻿@using Microsoft.AspNet.Http;
 @using Newtonsoft.Json.Linq;
 @using Newtonsoft.Json;
-
+@using MProjectWeb.Models.DBControllers;
+@{
+    JObject ops = JsonConvert.DeserializeObject<JObject>(Context.Session.GetString("op"));
+    string st = ops.ToString().Replace("&#xD;&#xA;", "");
+    string c = st.Substring(1, 2);
+    st = st.Replace(c, "");
+}
 
 
 <!DOCTYPE html>
@@ -35,7 +41,7 @@
 
 </head>
 
-<body>
+<body id="kd" onload="dropDownClass(@st)">
 
     <div id="wrapper">
 
@@ -111,8 +117,8 @@
                 </li>
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+            <div class="collapse navbar-collapse navbar-ex1-collapse" id="axd">
+                <ul class="nav navbar-nav side-nav" id="kel">
 
                     @{
                         JObject op = JsonConvert.DeserializeObject<JObject>(Context.Session.GetString("op"));
@@ -120,30 +126,31 @@
                         {
 
                             String con = (string)x.ElementAt(0).ElementAt(0).ElementAt(1).First().First();
-                            String act = (string)@x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
+                            String act = (string)x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
 
                             <li>
                                 <a style="color:darkgray"
-                                   href=""
                                    data-toggle="collapse" data-target="#op_@act"
-                                   id="@act">
+                                   id="@act" class="kl">
                                     @x.ElementAt(0).ElementAt(0).ElementAt(0).First().First()
                                 </a>
 
-                                <ul id="op_@act" class="collapse">
-                                    <li>
-                                        <a>a</a>
-                                    </li>
-                                    <li>
-                                        <a>b</a>
-                                    </li>
-                                    <li>
-                                        <a>c</a>
-                                    </li>
+                                <ul id="op_@act" class="collapse" style="background-color:darkslategrey;">
+                                    @{
+                                        foreach (var y in x.ElementAt(1).ElementAt(0))
+                                        {
+                                            <li>
+                                                <a style="color:whitesmoke"
+                                                   id="@y.ElementAt(0).ElementAt(0).ElementAt(2).ElementAt(0).ElementAt(0)">
+                                                    @y.ElementAt(0).ElementAt(0).ElementAt(0).ElementAt(0).ElementAt(0)
+                                                </a>
+                                            </li>
+                                        }
+                                    }
                                 </ul>
 
                             </li>
-                        }
+                                        }
                     }
                     <li>
                         <a asp-controller="Projects" asp-action="Index" class="abt"><i class="fa fa-fw fa-dashboard"></i> About</a>
@@ -153,17 +160,20 @@
                         <a asp-controller="index" asp-action="Index" class="abt"><i class="fa fa-fw fa-dashboard"></i>Mproject Web</a>
                     </li>
 
-
                 </ul>
+
+
+
             </div>
 
             <!-- /.navbar-collapse -->
         </nav>
         <div id="page-wrapper">
 
-            <div class="container-fluid"  id="asd" >
+            <div class="container-fluid" id="content-opt" style="min-height:600px">
 
                 @RenderBody()
+               
             </div>
             <!-- /.container-fluid -->
 
@@ -173,40 +183,12 @@
 </body>
 <!-- /#wrapper -->
 <!-- jQuery -->
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/a.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/a.js"></script>
+<script>
+    $.ajaxSetup({ cache: false });
+</script>
+@Html.Partial("~/Views/Shared/OptionsIndexJS")
 </html>
-
-
-@{
-    foreach (var x in op.GetValue("menu"))
-    {
-        String con = (string)x.ElementAt(0).ElementAt(0).ElementAt(1).First().First();
-        String act = (string)@x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
-        <script>
-            $("#@act").click(function () {
-                $.ajax({
-
-                    url: '',
-                    type: 'text',
-                    success: function (data) {
-                        //alert("ok");
-                        $("#asd").load('/@con/@act');
-                        //alert("asd");
-                    }
-                    });
-
-
-
-            });
-            @*@{Context.Session.SetString("opx", act); }*@
-
-
-
-        </script>
-    }
-
-
-}

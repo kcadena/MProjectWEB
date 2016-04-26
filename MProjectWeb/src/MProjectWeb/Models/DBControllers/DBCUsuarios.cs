@@ -15,12 +15,17 @@ namespace MProjectWeb.Models.DBControllers
         }
         public usuarios loginUsuario(Dictionary<string, string> dic)
         {
-            usuarios dat = (from x in db.usuarios
-                      where x.e_mail == dic["email"] && x.pass == dic["pass"]
-                      select x).First();
-
-            if (dat != null) return dat;
-            return null;
+            try
+            {
+                usuarios dat = (from x in db.usuarios
+                                where x.e_mail == dic["email"] && x.pass == dic["pass"]
+                                select x).First();
+                return dat;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
