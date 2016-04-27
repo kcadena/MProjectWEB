@@ -61,23 +61,32 @@ function callOpt(op1, op2, sel) {
 
 function projectsClick(dat) {
     dat = dat.replace(/prj_/gi, "");
+    dat = {id:dat};
     $.ajax({
-        url: '/Projects/DetailsProject',
-        type: 'POST',
-        data: { id_prj: dat},
-        dataType: 'json',
-        async: true,
-        cache: false,
+        url: '/Projects/PanelProject',
+        type: "POST",
+        //dataType: "json",
+        data: dat,
+        //contentType: 'application/json; charset=utf-8',
+        
+       // cache: false,
+        //datType: "json",
+        //async: true,
+        //cache: false,
         beforeSend: function () {
 
             $("#panel_prj").html("");
             $("#panel_prj").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
         },
         success: function succ(data) {
-            //alert(con + "  " + act);
+            //alert("OK  ");
             $("#panel_prj").html(data);
 
+        }        
+    }).fail(
+       function (da) {
+            alert("err  "+JSONda.toString());
         }
-    });
+    );
 
 }

@@ -40,8 +40,8 @@
         {
             "item": [
                 { "name": "Publicaciones" },
-                { "controller": "publish" },
-                { "action": "Publish" }
+                { "controller": "publishes" },
+                { "action": "Publishes" }
             ],
             "items": [
                 {

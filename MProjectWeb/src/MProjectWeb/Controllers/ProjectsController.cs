@@ -47,10 +47,15 @@ namespace MProjectWeb.Controllers
         }
 
         //==========================================       VIEWS HELP       ===============================================//
-
-        public IActionResult PanelProject(string dat)
+        [HttpPost]
+        public IActionResult PanelProject([FromForm]JObject json)
         {
-            ViewBag.pj = dat;
+            //var s = JObject.Parse(this.Request.Form.ElementAt(0).Key);
+            dynamic dat = Request.Form;
+            //var s = json.GetValue("id");
+
+            ViewBag.id_prj = dat["id"];
+
             return View();
         }
 

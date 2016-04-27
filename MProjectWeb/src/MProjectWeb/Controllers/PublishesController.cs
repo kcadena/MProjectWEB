@@ -8,14 +8,14 @@ using Microsoft.AspNet.Mvc;
 
 namespace MProjectWeb.Controllers
 {
-    public class PublishController : Controller
+    public class PublishesController : Controller
     {
         // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Publish()
+        public IActionResult Publishes()
         {
             return View();
         }
