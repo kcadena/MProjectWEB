@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Http;
 using MProjectWeb.Models.DBControllers;
-
+using MProjectWeb.ViewModels;
 using Newtonsoft.Json;
 
 using MProjectWeb.Models.Sqlite;
@@ -27,12 +27,13 @@ namespace MProjectWeb.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            
             DBCProjects h = new DBCProjects();
             try
             {
                 long user = Convert.ToInt64(HttpContext.Session.GetString("UsuID"));
                 var x = h.listProjectsUsers(user);
-                TempData["prj"] = x;
+                //  TempData["prj"] = x;
             }
             catch { }
             HttpContext.Session.SetString("op", webOptions().ToString());
@@ -40,28 +41,47 @@ namespace MProjectWeb.Controllers
         }
         public IActionResult Projects()
         {
+            HttpContext.Session.Remove("id_prj");
             DBCProjects h = new DBCProjects();
-            long user = Convert.ToInt64( HttpContext.Session.GetString("UsuID"));
+            long user = Convert.ToInt64(HttpContext.Session.GetString("UsuID"));
             ViewBag.projects = h.listProjectsUsers(user);
             return View();
         }
 
         //==========================================       VIEWS HELP       ===============================================//
         [HttpPost]
-        public IActionResult PanelProject([FromForm]JObject json)
+        public IActionResult PanelProject()
         {
             //var s = JObject.Parse(this.Request.Form.ElementAt(0).Key);
             dynamic dat = Request.Form;
             //var s = json.GetValue("id");
+            //var ds = json.GetValue("id");
+            long id = Convert.ToInt64(dat["id"]);
+            ViewBag.id_prj = id.ToString();
+            HttpContext.Session.SetString("id_prj",id.ToString());
+            return View();
+        }
 
-            ViewBag.id_prj = dat["id"];
-
+        [HttpPost]
+        public IActionResult ActMoreInfo()
+        {
+            dynamic dat = Request.Form;
+            long id = Convert.ToInt64(dat["id_car"]);
+            ViewBag.id_car = id;
             return View();
         }
 
         //==========================================   VISTAS SUBOPCIONES   ===============================================//
         public IActionResult Activity()
         {
+            ViewBag.id_prj = HttpContext.Session.GetString("id_prj");
+            if (HttpContext.Session.GetString("id_prj")!=null)
+            {
+                long id = Convert.ToInt64(HttpContext.Session.GetString("id_prj"));
+                DBCActivities act = new DBCActivities();
+                List<ActivityList> act_lst = act.activityList(id);
+                ViewBag.act_lst = act_lst;
+            }
             return View();
         }
 

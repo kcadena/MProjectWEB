@@ -6,6 +6,9 @@
 
 /* Global Styles */
 
+.opt_footer:hover{
+    cursor:pointer;
+}
 li:hover{
     cursor:pointer;
 }

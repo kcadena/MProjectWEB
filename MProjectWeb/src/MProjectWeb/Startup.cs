@@ -15,7 +15,6 @@ namespace MProjectWeb
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFramework();
             services.AddRouting();
             services.AddCaching(); // Adds a default in-memory implementation of IDistributedCache
             services.AddSession(
@@ -27,13 +26,18 @@ namespace MProjectWeb
                 //    //options.IdleTimeout = TimeSpan.FromSeconds(10);
                 //}
                 );
-           
+
+            services.AddEntityFramework()
+           .AddSqlite()
+           .AddDbContext<Models.Sqlite.MProjectDeskSQLITEContext>();
+
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+
             app.UseIISPlatformHandler();
             app.UseStaticFiles();
             app.UseSession();

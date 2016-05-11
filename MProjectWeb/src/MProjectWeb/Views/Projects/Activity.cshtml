@@ -1,103 +1,109 @@
-﻿@{
+﻿@using MProjectWeb.ViewModels;
+@{
     Layout = null;
+
 }
-<div  class="asd">
-        <h1 class="page-header">
-            <!-- Title of page -->
-            Actividades
-            <small>
-                <!-- SubTitle of page -->
-            </small>
-        </h1>
+<div class="asd">
+    <h1 class="page-header">
+        <!-- Title of page -->
+        Actividades
+        <small>
+            <!-- SubTitle of page -->
+        </small>
+    </h1>
 
 </div>
-<div class="row">
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-comments fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">26</div>
-                        <div>New Comments!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
+
+@{
+
+    if (ViewBag.id_prj == null)
+    {
+
+        <div class="row">
+            <h5>
+                No ha seleccionado un proyecto para mostrar detalles,
+                <br />Por favor seleccione un proyecto en la opcion Proyectos
+            </h5>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
+
+    }
+    else
+    {
+
+        <div class="row">
+            @{
+                List<ActivityList> act_lst = ViewBag.act_lst;
+                foreach (var x in act_lst)
+                {
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <!-- header -->
+                            <div class="panel-heading" style="height:30px">
+                                <div class="row">
+                                    <div class="text-center" style="margin-top:-5px">
+                                        @x.name
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Body -->
+                            <div class="panel-body">
+                                <div style="margin-left:5px">
+                                    <div class="row">
+                                        Descripcion: <span>@x.description</span>
+                                    </div>
+                                    <div class="visible-lg-inline"></div>
+                                    <div class="row">
+                                        @x.folder
+                                    </div>
+                                    <div class="row">
+                                        Estado: <span>@x.state</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Footer -->
+                            <div class="opt_footer dropdown" style="min-height:31px;">
+                                <button style="position:relative;width:100%;height:30px;border:none;/*background-color:transparent*/" class="btn text-left pull-left dropdown-toggle"
+                                        type="button" id="dropdown_opt_footer" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="true">
+                                    Opciones
+                                    <span class="pull-right"><i class="fa fa-plus-circle"></i></span>
+                                </button>
+                                <ul class="dropdown-menu" 
+                                    aria-labelledby="dropdown_opt_footer" 
+                                    style="position:relative;width:100%"
+                                    id_extra="@x.id_characteristic"
+                                    >
+                                    <li><a class="opt_footer_files">Archivos/Documentos</a></li>
+                                    <li><a class="opt_footer_statistics">Estadisticas</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a class="opt_footer_moreInf">Mas Informacion</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">12</div>
-                        <div>New Tasks!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
+
+                }
+            }
+
+
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-shopping-cart fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">124</div>
-                        <div>New Orders!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-red">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-support fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">13</div>
-                        <div>Support Tickets!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
+
+                }
+
+}
+
+<script>
+    $(".opt_footer_files").click(function () {
+        var id = $(this).parent().parent().attr("id_extra");
+        alert("files");
+    });
+    $(".opt_footer_statistics").click(function () {
+        var id = $(this).parent().parent().attr("id_extra");
+        alert("statistics");
+    });
+    $(".opt_footer_moreInf").click(function () {
+        var id = $(this).parent().parent().attr("id_extra");
+        optionsActivities(id, "ActMoreInfo")
+    });
+</script>

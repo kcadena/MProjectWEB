@@ -67,26 +67,49 @@ function projectsClick(dat) {
         type: "POST",
         //dataType: "json",
         data: dat,
-        //contentType: 'application/json; charset=utf-8',
+        //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         
        // cache: false,
         //datType: "json",
         //async: true,
-        //cache: false,
+        cache: false,
         beforeSend: function () {
-
             $("#panel_prj").html("");
             $("#panel_prj").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
         },
         success: function succ(data) {
-            //alert("OK  ");
             $("#panel_prj").html(data);
-
         }        
     }).fail(
        function (da) {
-            alert("err  "+JSONda.toString());
+            alert("No se pudo cargar la pagina.");
         }
     );
 
 }
+
+
+///////////////  opciones concernientes al dropdown que poseen las actividades  //////////////////////////
+
+function optionsActivities(id,act) {
+    //id => id de la caracteristica 
+    //act => Opciones  [ 1* files 2*estatistics 3* more information] => Accion en el controlador
+    $.ajax({
+        url: '/Projects/'+act,
+        type: 'POST',
+        data: {id_car:id},
+        async: true,
+        cache: false,
+        beforeSend: function () {
+
+            $("#content-opt").html("");
+            $("#content-opt").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
+        },
+        success: function succ(data) {
+            $("#content-opt").html(data);
+
+        }
+    });
+
+}
+
