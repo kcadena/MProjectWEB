@@ -61,15 +61,15 @@ function callOpt(op1, op2, sel) {
 
 function projectsClick(dat) {
     dat = dat.replace(/prj_/gi, "");
-    dat = {id:dat};
+    dat = { id: dat };
     $.ajax({
         url: '/Projects/PanelProject',
         type: "POST",
         //dataType: "json",
         data: dat,
         //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-        
-       // cache: false,
+
+        // cache: false,
         //datType: "json",
         //async: true,
         cache: false,
@@ -79,11 +79,11 @@ function projectsClick(dat) {
         },
         success: function succ(data) {
             $("#panel_prj").html(data);
-        }        
+        }
     }).fail(
        function (da) {
-            alert("No se pudo cargar la pagina.");
-        }
+           alert("No se pudo cargar la pagina.");
+       }
     );
 
 }
@@ -91,13 +91,13 @@ function projectsClick(dat) {
 
 ///////////////  opciones concernientes al dropdown que poseen las actividades  //////////////////////////
 
-function optionsActivities(id,act) {
+function optionsActivities(id, act) {
     //id => id de la caracteristica 
     //act => Opciones  [ 1* files 2*estatistics 3* more information] => Accion en el controlador
     $.ajax({
-        url: '/Projects/'+act,
+        url: '/Projects/' + act,
         type: 'POST',
-        data: {id_car:id},
+        data: { id_car: id },
         async: true,
         cache: false,
         beforeSend: function () {
@@ -113,3 +113,34 @@ function optionsActivities(id,act) {
 
 }
 
+
+///////////////  Click de los folders  //////////////////////////
+
+function openFolder(car,op) {
+    //alert(car);
+    $.ajax({
+        url: '/Projects/Activity',
+        type: 'POST',
+        data: { id_car: car,opt:op },
+        async: true,
+        cache: false,
+        beforeSend: function () {
+
+           // $("#content-opt").html("");
+           // $("#content-opt").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
+        },
+        success: function succ(data) {
+            if (data != 0) {
+                $("#content-opt").html("");
+                $("#content-opt").html(data);
+            }
+            else {
+                alert("No se encontraron actividaes relacionadas!!!");
+            }
+        }
+    }).fail(
+       function (da) {
+           alert("No se pudo cargar la pagina.");
+       }
+    );
+}

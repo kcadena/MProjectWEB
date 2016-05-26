@@ -1,68 +1,101 @@
 ﻿body {
+    padding-top: 50px;
 }
 
 #index-div {
-    width: 80%;
-    margin-left:10%;
-    padding-top: 60px;
+    /*margin-left:10%;*/
+    
     /*background: white;*/ /* For browsers that do not support gradients */
     /*background: -webkit-linear-gradient(gray, white);*/ /* For Safari 5.1 to 6.0 */
-    /*background: -o-linear-gradient(gray, white);*/  /*For Opera 11.1 to 12.0 */
+    /*background: -o-linear-gradient(gray, white);*/ /*For Opera 11.1 to 12.0 */
     /*background: -moz-linear-gradient(gray, white);*/ /* For Firefox 3.6 to 15 */
     /*background: linear-gradient(gray, white);*/ /* Standard syntax */
+}
 
+#back-index {
+    /*background: white;
+    background: -webkit-linear-gradient(gray, white);
+    background: -o-linear-gradient(gray, white);
+    background: -moz-linear-gradient(gray, white);*/
+    /*background: linear-gradient(rgb(82, 82, 82,1), rgba(0,0,0,0));*/
 }
-#back-index{
-    background: white; 
-    background: -webkit-linear-gradient(gray, white); 
-    background: -o-linear-gradient(gray, white); 
-    background: -moz-linear-gradient(gray, white); 
-    background: linear-gradient(gray, white);
-}
+
 #carousel-example-generic {
-    position:relative;
-    width:auto;
+    position: relative;
+    height: calc(100% - 50px);
+    width: 100%;
 }
 
-#news {
-    height: 45px;
-    margin-top: 15px;
-    background-color: yellowgreen;
+.img-slide {
+    position: relative;
+    margin: auto;
 }
 
-#form-search-news{
-    font-size-adjust:0.9;
-    position:relative;
-    margin-top: -32px;
-    margin-left: 60%;
+
+.slider_font_tit {
+    font-family: 'Lora', serif;
+    font-size: 90px;
+    position: relative;
+    margin-top: calc(-50% + 50px);
 }
 
-#news-h5 {
-    position:relative;
-    padding-top: 2px;
-    margin-left: 10px;
-}
-.img-slide{
-    position:relative;
-    margin:auto;
+.slider_font_cont {
+    font-family: 'Lora', serif;
+    font-size: 50px;
+    color: #d7d7d7;
 }
 
-#news-list{
-    height: 400px;
-    margin-top: 15px;
-    background-color: yellowgreen;
-    opacity:0.4;
+
+#content-pag-principal {
+    width: 80%;
+    margin: auto;
 }
 
-.stylish-input-group .input-group-addon{
-    background: white !important; 
+
+
+@media(max-width:768px) {
+    #btn_account {
+        position: relative;
+        width: 125px;
+        margin: 0 auto;
+    }
+
+    #carousel-example-generic {
+        position: relative;
+        width: 100%;
+    }
+
+
+    .slider_font_tit {
+        font-family: 'Lora', serif;
+        font-size: 40px;
+        position: relative;
+        margin-top: calc(-50% + 50px);
+    }
+
+    .slider_font_cont {
+        font-family: 'Lora', serif;
+        font-size: 20px;
+        color: #d7d7d7;
+    }
+
+    .imgs_pag_principar {
+        vertical-align:middle;
+        position: absolute;
+        width: 100%;
+    }
+
+    #content-pag-principal {
+        width: 92%;
+        margin: auto;
+    }
+    #back-folder {
+            background-color:aqua;
+            margin-left:-100px;
+        }
 }
-.stylish-input-group .form-control{
-	border-right:0; 
-	box-shadow:0 0 0; 
-	border-color:#ccc;
-}
-.stylish-input-group button{
-    border:0;
-    background:transparent;
+
+.imgs_pag_principar{
+  position:relative;
+  width:100%;
 }

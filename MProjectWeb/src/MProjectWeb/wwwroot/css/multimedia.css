@@ -1,0 +1,33 @@
+﻿body {
+ padding-top: 50px;
+}
+
+
+/*   Pictures  */
+
+   .mlt-cont{
+        margin:auto;
+        width:80%;
+    }
+
+
+.pics-pub{
+    position:relative;
+    width:95%;
+    margin:auto
+}
+
+.pic-min{
+    position:relative;
+   
+}
+
+/*   Videos  */
+
+
+
+/*   publicaciones   */
+.news{
+    position:relative;
+    width:80%;
+}

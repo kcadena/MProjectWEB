@@ -27,7 +27,7 @@ namespace MProjectWeb.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            
+
             DBCProjects h = new DBCProjects();
             try
             {
@@ -58,7 +58,7 @@ namespace MProjectWeb.Controllers
             //var ds = json.GetValue("id");
             long id = Convert.ToInt64(dat["id"]);
             ViewBag.id_prj = id.ToString();
-            HttpContext.Session.SetString("id_prj",id.ToString());
+            HttpContext.Session.SetString("id_prj", id.ToString());
             return View();
         }
 
@@ -75,13 +75,36 @@ namespace MProjectWeb.Controllers
         public IActionResult Activity()
         {
             ViewBag.id_prj = HttpContext.Session.GetString("id_prj");
-            if (HttpContext.Session.GetString("id_prj")!=null)
+
+            try
+            {
+
+                dynamic dat = new JsonArrayAttribute();
+                dat = Request.Form;
+                long id = Convert.ToInt64(dat["id_car"]);
+                HttpContext.Session.SetString("par_car", id.ToString());
+                DBCActivities act = new DBCActivities();
+                int op= Convert.ToInt32(dat["opt"]);
+                List<ActivityList> act_lst = act.activityList(id,op);
+                ViewBag.act_lst = act_lst;
+                try
+                {
+                    ViewBag.par = act_lst.First().par_characteristic;
+                }
+                catch
+                {
+                    return Content("0");
+                }
+                ViewBag.prj = Convert.ToInt64(HttpContext.Session.GetString("id_prj"));
+            }
+            catch
             {
                 long id = Convert.ToInt64(HttpContext.Session.GetString("id_prj"));
                 DBCActivities act = new DBCActivities();
-                List<ActivityList> act_lst = act.activityList(id);
+                List<ActivityList> act_lst = act.activityList(id,1);
                 ViewBag.act_lst = act_lst;
             }
+
             return View();
         }
 

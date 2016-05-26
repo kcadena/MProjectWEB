@@ -9,11 +9,14 @@ namespace MProjectWeb.ViewModels
     {
         public long id_act { get; set; }
         public long id_characteristic { get; set; }
+        public long? par_characteristic { get; set; }
         public string name { get; set; }
         public string description { get; set; }
-        public Nullable<long> id_fol { get; set; }
-        public string folder { get; set; }
+        public long folder { get; set; }
         public string state { get; set; }
+
+        //type 1=>folders 2=>actividades de folders 3=>actividades de actividades
+        public int type { get; set; }
     }
 
     public class ActivityInfo

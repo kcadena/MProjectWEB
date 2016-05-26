@@ -28,8 +28,7 @@ namespace MProjectWeb
                 );
 
             services.AddEntityFramework()
-           .AddSqlite()
-           .AddDbContext<Models.Sqlite.MProjectDeskSQLITEContext>();
+           .AddSqlite();
 
             services.AddMvc();
         }

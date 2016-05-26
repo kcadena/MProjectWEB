@@ -31,13 +31,13 @@
         "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
         "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
-
         "Microsoft.ApplicationInsights.AspNet": "1.0.0-rc1"
     },
 
-  "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel"
-  },
+    "commands": {
+        "web": "Microsoft.AspNet.Server.Kestrel",
+        "ef": "EntityFramework.Commands"
+    },
 
   "frameworks": {
     "dnx451": { },

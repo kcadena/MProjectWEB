@@ -46,13 +46,13 @@
                             @{long dat = -1; }
                             @foreach (var z in x)
                             {
-                                dat = (long)z.id_pro;
+                                dat = (long)z.id_pro_car;
                                 <div class="row" style="margin-left:10px">@z.desc : @z.valor</div>
                             }
                             <div class="hidden" id="dat_@dat">@dat</div>
                         </div>
                     </div>
-                    <a id="prj_@x.First().id_pro">
+                    <a id="prj_@x.First().id_pro_car">
                         <div class="panel-footer prj_op">
                             <span class="pull-left">View Details</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

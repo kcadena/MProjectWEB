@@ -7,7 +7,11 @@ namespace MProjectWeb.Models.Sqlite
     {
         public usuarios()
         {
-            usuarios_proyectos = new HashSet<usuarios_proyectos>();
+            actividades = new HashSet<actividades>();
+            archivos = new HashSet<archivos>();
+            caracteristicas = new HashSet<caracteristicas>();
+            proyectos = new HashSet<proyectos>();
+            usuarios_tipo_usuarios = new HashSet<usuarios_tipo_usuarios>();
         }
 
         public long id_usuario { get; set; }
@@ -16,6 +20,10 @@ namespace MProjectWeb.Models.Sqlite
         public string nombre { get; set; }
         public string pass { get; set; }
 
-        public virtual ICollection<usuarios_proyectos> usuarios_proyectos { get; set; }
+        public virtual ICollection<actividades> actividades { get; set; }
+        public virtual ICollection<archivos> archivos { get; set; }
+        public virtual ICollection<caracteristicas> caracteristicas { get; set; }
+        public virtual ICollection<proyectos> proyectos { get; set; }
+        public virtual ICollection<usuarios_tipo_usuarios> usuarios_tipo_usuarios { get; set; }
     }
 }

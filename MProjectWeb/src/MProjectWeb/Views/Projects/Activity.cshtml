@@ -1,18 +1,29 @@
 ﻿@using MProjectWeb.ViewModels;
+@using Microsoft.AspNet.Http;
 @{
     Layout = null;
 
 }
-<div class="asd">
-    <h1 class="page-header">
+
+
+<div class="row">
+    <h1 class="page-header col-md-11 col-xs-11">
         <!-- Title of page -->
         Actividades
-        <small>
-            <!-- SubTitle of page -->
-        </small>
     </h1>
-
+    @{
+        if (ViewBag.prj != ViewBag.par && ViewBag.par != null)
+        {
+            <div class="col-md-1 col-xs-1"
+                    id="back-folder"
+                    id_extra="@ViewBag.par">
+                <span id="icon-back" class="left fa fa-arrow-circle-left"></span>
+            </div>
+        }
+    }
 </div>
+
+
 
 @{
 
@@ -32,78 +43,143 @@
 
         <div class="row">
             @{
+                long sd = -1;
                 List<ActivityList> act_lst = ViewBag.act_lst;
+
                 foreach (var x in act_lst)
                 {
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <!-- header -->
-                            <div class="panel-heading" style="height:30px">
-                                <div class="row">
-                                    <div class="text-center" style="margin-top:-5px">
-                                        @x.name
+                    if (x.folder == 0)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading open-folder" id_extra="@x.id_characteristic">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-folder-open fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div style="position:relative; font-size:30px"
+                                                 class="text-right">
+                                                @x.name
+                                            </div>
+                                            <hr />
+                                            <div class="row" style="margin-right:3px">
+                                                @x.description
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Body -->
-                            <div class="panel-body">
-                                <div style="margin-left:5px">
-                                    <div class="row">
-                                        Descripcion: <span>@x.description</span>
-                                    </div>
-                                    <div class="visible-lg-inline"></div>
-                                    <div class="row">
-                                        @x.folder
-                                    </div>
-                                    <div class="row">
-                                        Estado: <span>@x.state</span>
-                                    </div>
+                                <!--   footer  -->
+                                <div class="opt_footer dropdown" style="min-height:31px;">
+                                    <button style="position:relative;width:100%;height:30px;border:none;/*background-color:transparent*/" class="btn text-left pull-left dropdown-toggle"
+                                            type="button" id="dropdown_opt_footer" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="true">
+                                        Opciones
+                                        <span class="pull-right"><i class="fa fa-plus-circle"></i></span>
+                                    </button>
+                                    <ul class="dropdown-menu"
+                                        aria-labelledby="dropdown_opt_footer"
+                                        style="position:relative;width:100%"
+                                        id_extra="@x.id_characteristic">
+                                        <li><a class="opt_footer_files">Archivos/Documentos</a></li>
+                                        <li><a class="opt_footer_statistics">Estadisticas</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a class="opt_footer_moreInf">Mas Informacion</a></li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <!-- Footer -->
-                            <div class="opt_footer dropdown" style="min-height:31px;">
-                                <button style="position:relative;width:100%;height:30px;border:none;/*background-color:transparent*/" class="btn text-left pull-left dropdown-toggle"
-                                        type="button" id="dropdown_opt_footer" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="true">
-                                    Opciones
-                                    <span class="pull-right"><i class="fa fa-plus-circle"></i></span>
-                                </button>
-                                <ul class="dropdown-menu" 
-                                    aria-labelledby="dropdown_opt_footer" 
-                                    style="position:relative;width:100%"
-                                    id_extra="@x.id_characteristic"
-                                    >
-                                    <li><a class="opt_footer_files">Archivos/Documentos</a></li>
-                                    <li><a class="opt_footer_statistics">Estadisticas</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a class="opt_footer_moreInf">Mas Informacion</a></li>
-                                </ul>
                             </div>
                         </div>
-                    </div>
+
+                    }
+                    else if (x.folder == 1)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="panel col-pan">
+                                @{
+                                    if (x.type == 1)
+                                    {
+                                        <script>
+                                            $(".col-pan").addClass('panel-green');
+                                        </script>
+                                    }
+                                    else
+                                    {
+                                        <script>
+                                            $(".col-pan").addClass('panel-yellow');
+                                        </script>
+                                    }
+                                }
+                                <!-- header -->
+                                <div class="panel-heading  open-folder"  
+                                     id_extra="@x.id_characteristic" 
+                                     style="height:30px">
+                                    <div class="row">
+                                        <div class="text-center" style="margin-top:-5px">
+                                            @x.name
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Body -->
+                                <div class="panel-body">
+                                    <div style="margin-left:5px">
+                                        <div class="">
+                                            Descripcion: <span>@x.description</span>
+                                        </div>
+                                        <hr />
+                                        <div class="">
+                                            Estado: <span>@x.state</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Footer -->
+                                <div class="opt_footer dropdown" style="min-height:31px;">
+                                    <button style="position:relative;width:100%;height:30px;border:none;/*background-color:transparent*/" class="btn text-left pull-left dropdown-toggle"
+                                            type="button" id="dropdown_opt_footer" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="true">
+                                        Opciones
+                                        <span class="pull-right"><i class="fa fa-plus-circle"></i></span>
+                                    </button>
+                                    <ul class="dropdown-menu"
+                                        aria-labelledby="dropdown_opt_footer"
+                                        style="position:relative;width:100%"
+                                        id_extra="@x.id_characteristic">
+                                        <li><a class="opt_footer_files">Archivos/Documentos</a></li>
+                                        <li><a class="opt_footer_statistics">Estadisticas</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a class="opt_footer_moreInf">Mas Informacion</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
 
                 }
+                <script>
+                    $(".opt_footer_files").click(function () {
+                        var id = $(this).parent().parent().attr("id_extra");
+                        alert("files");
+                    });
+                    $(".opt_footer_statistics").click(function () {
+                        var id = $(this).parent().parent().attr("id_extra");
+                        alert("statistics");
+                    });
+                    $(".opt_footer_moreInf").click(function () {
+                        var id = $(this).parent().parent().attr("id_extra");
+                        optionsActivities(id, "ActMoreInfo")
+                    });
+                    $(".open-folder").click(function () {
+                        var ids = $(this).attr("id_extra");
+                        openFolder(ids, 1);
+                    });
+                    $("#back-folder").click(function () {
+                        var ids = $(this).attr("id_extra");
+                        openFolder(ids, 2);
+                    });
+                </script>
             }
 
-
         </div>
-
                 }
-
 }
 
-<script>
-    $(".opt_footer_files").click(function () {
-        var id = $(this).parent().parent().attr("id_extra");
-        alert("files");
-    });
-    $(".opt_footer_statistics").click(function () {
-        var id = $(this).parent().parent().attr("id_extra");
-        alert("statistics");
-    });
-    $(".opt_footer_moreInf").click(function () {
-        var id = $(this).parent().parent().attr("id_extra");
-        optionsActivities(id, "ActMoreInfo")
-    });
-</script>
