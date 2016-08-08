@@ -7,7 +7,7 @@ namespace MProjectWeb.Models.Sqlite
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite(@"data source=C:\Users\admi\Desktop\publish\Project.Management\MProjectWPF\Model\MProjectDeskSQLITE.sqlite");
+            options.UseSqlite(@"data source=C:\Users\admi\Desktop\Trabajo de grado\PROGRAMMING\Project.Management\MProjectWEB\MProjectWeb\src\MProjectWeb\Models\MProjectDeskSQLITE.sqlite");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

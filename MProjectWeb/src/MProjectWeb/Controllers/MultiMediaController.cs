@@ -30,5 +30,9 @@ namespace MProjectWeb.Controllers
         {
             return View();
         }
+        public IActionResult Maps()
+        {
+            return View();
+        }
     }
 }
