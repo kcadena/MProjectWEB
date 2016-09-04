@@ -1,5 +1,7 @@
-﻿//permite hacer el cambio del modal login a register y viceversa
+﻿//,    "dnxcore50": { }
+//permite hacer el cambio del modal login a register y viceversa
 $(".btn_log").click(function () {
+    
     $("#modal_reg").modal("hide");
     $("#modal_log").modal();
 });
@@ -9,12 +11,12 @@ $(".btn_reg").click(function () {
     $("#modal_reg").modal();
 });
 
-
 //vriables para las opciones en side-nav
 var opt = "";     //variable para JSON
 var con = "";   //Controlador
 var act = "";   //Accion
 var act_ant = "";//Accion Anterior
+var con_ant = "";//Accion Anterior
 //carga las optciones provenientes de archivo JSON 
 function dropDownClass(op) {
     //alert(op);
@@ -24,24 +26,44 @@ function dropDownClass(op) {
 }
 //funcion que habilita cargar AJAX en la pagina 
 //op1 y op2 corresponden al controlador y accion que vienen del click de las opciones
-function callOpt(op1, op2, sel) {
+function callOpt(con, act, sel) {
+    
+   
+    try {
+        if (sel == 0) {
+            try {
+                $("#" + act_ant).parent().removeClass('op-active');
+            } catch (ex) {}
+            $("#" + act).parent().addClass('op-active');
+            act_ant = act;
+        }
+    }catch(exc){}
+
 
     if (sel == 1) {
-        $("#op_" + act_ant).removeClass('in');  //cierra dropdown cuando selecciona otra opcion
-        $("#" + act_ant).parent().removeClass("active");
-        act_ant = op2;
+        try {
+            try {
+                $("#op_" + con_ant).removeClass('in');
+            } catch (ex) {  }
+            $("#op_" + con).removeClass("in");
+            con_ant = con;
+        } catch (ex) { alert(ex); }
+
+        //$("#op_" + act_ant).removeClass('in');  //cierra dropdown cuando selecciona otra opcion
+        //$("#" + act_ant).parent().removeClass("active");
+        //act_ant = op2;
     }
     //$("#op_" + act).addClass('active');
     $("#axd").removeClass('in');           //cierra dropdown cuando selecciona opcion en moviles
-    con = op1;
-    act = op2;
-    $("#" + act).parent().addClass("active");
+   
+   
 
     //e.preventDefault();
     //e.stopPropagation();
     $.ajax({
-        url: '',
-        type: 'text',
+        url: '/' + con + '/' + act,
+        type: 'POST',
+        data: {},
         async: true,
         cache: false,
         beforeSend: function () {
@@ -50,11 +72,15 @@ function callOpt(op1, op2, sel) {
             $("#content-opt").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
         },
         success: function succ(data) {
-            //alert(con + "  " + act);
-            $("#content-opt").load('/' + con + '/' + act);
+            $("#content-opt").html("");
+            $("#content-opt").html(data);
 
         }
-    });
+    }).fail(
+       function (da) {
+           //alert("No se pudo cargar la pagina.");
+       }
+    );
 
 }
 
@@ -146,17 +172,36 @@ function openFolder(car,op) {
 }
 
 
+//metodo para obtener los archivos de una caracteristica
+function showFiles( keym, usu, car, type, text ) {
+    try {
+        $("#" + act_ant).parent().removeClass('op-active');
+        $("#Files").parent().addClass('op-active');
+        act_ant = "Files";
+    } catch (ex) { }
+    $.ajax({
+        url: '/Projects/Files',
+        type: 'POST',
+        data: { idCar: car, idUsu: usu, keym: keym, type:type, text:text },
+        async: true,
+        cache: false,
+        beforeSend: function () {
 
-
-$(document).ready(function () {
-    $("[rel='tooltip']").tooltip();
-
-    $('.thumbnail').hover(
-        function () {
-            $(this).find('.caption').slideDown(250); //.fadeIn(250)
+            $("#content-opt").html("");
+            $("#content-opt").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
         },
-        function () {
-            $(this).find('.caption').slideUp(250); //.fadeOut(205)
+        success: function succ(data) {
+            if (data != 0) {
+                $("#content-opt").html("");
+                $("#content-opt").html(data);
+            }
+            else {
+                alert("No se encontraron actividaes relacionadas!!!");
+            }
         }
+    }).fail(
+       function (da) {
+           alert("No se pudo cargar la pagina.");
+       }
     );
-});
+}

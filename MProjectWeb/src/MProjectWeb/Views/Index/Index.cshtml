@@ -1,84 +1,184 @@
-﻿<link href="~/css/Index.css" rel="stylesheet" />
-
-<div class="row" >
-    <!-- Slider -->
-    <div id="carousel-example-generic" class="carousel slide`" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-
-            <div class="item active" role="listbox">
-                <img src="http://www.argentina.travel/pics/1600x686/huellas-incas-jpg" class="img-slide img-responsive" />
-                <div class="carousel-caption">
-                    <h1 class="slider_font_tit">Qhapaq Ñan</h1>
-                    <h2 class="slider_font_cont">Colombia</h2>
+﻿@{
+    try
+    {
+        bool st = ViewBag.errLogin;
+        if (st)
+        {
+            <div  >
+                <div class="alert alert-danger fade in center-block" style="position:absolute;width:100%">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Error!</strong>No se ha iniciado session. Revise que el usuario y contraseña sean correctos.
                 </div>
             </div>
-            <div class="item">
-                <img src="http://www.argentina.travel/pics/1600x686/df43e072e7.jpg" class="img-slide img-responsive" />
-                <div class="carousel-caption">
-                    <h1 class="slider_font_tit">Qhapaq Ñan</h1>
-                    <h2 class="slider_font_cont">Colombia</h2>
-                </div>
-            </div>
-            <div class="item">
-                <img src="http://www.argentina.travel/pics/1600x686/dfd124c29b.JPG" class="img-slide img-responsive" />
-                <div class="carousel-caption">
-                    <h1 class="slider_font_tit">Qhapaq Ñan</h1>
-                    <h2 class="slider_font_cont">Colombia</h2>
-                </div>
+        }
+    }
+    catch { }
+}
+
+<div style="background:#333333;">
+    <div class="row center-block" style="margin:0px;width:80%;margin-left:10%">
+        <div class="col-md-4">
+            <div style="color:white;margin-top:200px">
+                <h1 style="font-size:90px">Mproject</h1>
+                <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
             </div>
         </div>
-        <!-- Controls -->
-        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
 
 
+        <img src="/img/SVG/logoTextMproject.svg"
+             class="col-md-8 center-block" style="position:relative;" />
     </div>
-    <hr />
-    <!-- informacion principal de la organizacion -->
-    <div id="content-pag-principal">
-        <div id="as" class="row" >
-            <div class="col-lg-4 col-md-12" style="position:relative;">
-                <img src="http://www.argentina.travel/pics/1600x686/9d316e1a16.jpg" class="imgs_pag_principar" style="position:relative" />
+
+    <div class="row" style="margin:0px;width:80%;margin-left:10%;color:white;position:relative">
+        <!--WEb-->
+        <div class="col-md-4 center-block">
+            <img src="/img/SVG/WebPlat.svg" style="width:50%;height:50%" class="center-block" />
+            <div style="width:80%;" class="center-block">
+                <h2 class="text-center">Entorno Web</h2>
+                <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
             </div>
-            <div class="col-lg-8 col-md-12" style="position:relative">
-                <h3>
-                    Qhapaq Ñan
-                </h3>
+        </div>
+        <!--Desktop-->
+        <div class="col-md-4 center-block">
+            <img src="/img/SVG/DeskPlat.svg" style="width:50%;height:50%" class="center-block" />
+            <div class="center-block" style="width:80%;">
+                <h2 class="text-center">Multimedia</h2>
                 <p>
-                    Columna vertebral del poder político y económico del Tawantisuyo –el imperio Inca- el Qhapaq Ñan (en quechua, “camino principal”) constituyó una red de caminos de más de 30.000 kilómetros de extensión que conectaba importantes centros de producción, administrativos y ceremoniales. Su trazado ha sido, incluso, anterior al apogeo del imperio Inca: se calcula que tiene unos 2.000 años de antigüedad. Hoy atraviesa seis países andinos, partiendo desde Perú hacia el sur recorre parte de los territorios de Bolivia, Argentina y Chile y hacia el norte, los de Ecuador y Colombia. En 2014 fue declarado Patrimonio Mundial por la UNESCO.
-                    <br />
-                    En Argentina, el Qhapaq Ñan ingresa desde Bolivia por el pequeño poblado de Calahoyo (en la Puna, a más de 4.000 m.s.n.m.) y atraviesa desiertos, valles y montañas uniendo los territorios que hoy componen las provincias de Jujuy, Salta, Tucumán, Catamarca, La Rioja, San Juan y Mendoza, para perderse luego en la Cordillera de los Andes rumbo a Chile. En todo el territorio argentino se conservan alrededor de 119 kilómetros de este camino, a lo largo de los cuáles se pueden visitar importantes sitios arqueológicos. Recorrerlo, permite conocer los distintos aspectos de la vida de los pueblos antiguos: la vida civil, la actividad astronómica, la militar, las prácticas religiosas. Y también, compartir esta experiencia con las comunidades locales, muchas de ellas emplazadas en sitios remotos y en impactantes marcos naturales, conocer las costumbres ancestrales que han ido pasando de generación en generación, degustar la gastronomía regional. En fin, entrar en el corazón más profundo de los pueblos andinos.
+                    Permitete administrar mucho mejor tus contenidos multimedia, los cuales estaran disponibles
+                    en la nube para que puedas acceder a ellos desde cualquier lugar en donde te encuentres.
                 </p>
             </div>
-            <br />
         </div>
-        <hr />
-        <div class="col-lg-8">
-            <h3>
-                Ritual a la Madre Tierra
-            </h3>
-            <p>
-                Cada 1º de agosto, los pueblos andinos celebran a la Pachamama (la Madre Tierra) en una ceremonia tradicional en la que le ofrendan alimentos y bebidas, al tiempo que le piden por buenas cosechas y fecundidad para los rebaños. En Catamarca, los viajeros pueden compartir este antiguo ritual en la Corpachada puneña de la Pachamama de Laguna Blanca. Aquí, la comunidad toda se reúne en una colorida ceremonia en la que se destacan las representaciones de deidades como la propia Pachamama y el Coquena (una deidad mitológica vestida con prendas de lana de oveja y de llama).
-                <br />
-                La celebración se mantiene fiel a la tradición. Se selecciona el mejor ejemplar de un rebaño de ovejas para ser sacrificado en honor de la Pachamama; en tanto, el Coquena comienza a azuzar a los presentes, grupos de niños y jóvenes entonan cantos y coplas y hombres y mujeres preparan números de danza. Los artesanos muestran sus chullos, guantes, ponchos, pullos y medias de lana de llama, oveja y vicuña. Y expertas manos locales ofrecen, recién salidos de sus cocinas, los sabores más tradicionales de Catamarca: locro de maíz, carne vacuna, de cabrito y de cordero, y charqui de llama.
-            </p>
+
+        <!--Multimedia-->
+        <div class="col-md-4 center-block">
+            <img src="/img/SVG/Multimedia.svg" style="width:50%;height:50%" class="center-block" />
+            <div class="center-block" style="width:80%;">
+                <h2 class="text-center">Multimedia</h2>
+                <p>
+                    Permitete administrar mucho mejor tus contenidos multimedia, los cuales estaran disponibles
+                    en la nube para que puedas acceder a ellos desde cualquier lugar en donde te encuentres.
+                </p>
+            </div>
         </div>
-        <div class="col-lg-4" style="vertical-align:middle">
-            <img src="http://www.argentina.travel/pics/1600x686/7ac6e28c8b.jpg" class="imgs_pag_principar"/>
+
+    </div>
+    <br /><br /><br />
+    <div class="row" style="margin:0px;width:80%;margin-left:10%;color:white;position:relative">
+        <!--Busqueda-->
+        <div class="col-md-4 center-block">
+            <img src="/img/SVG/Search.svg" style="width:50%;height:50%" class="center-block" />
+            <div style="width:80%;" class="center-block">
+                <h2 class="text-center">Busqueda</h2>
+                <p>
+                    MProject cuenta con un sistema avanzado de busqueda de informacion para Imagenes,
+                    Videos, Sonidos y Documentos, de una forma sensilla y eficiente. Ya que no necesitas saber
+                    el nombre completo del archivo para encontrarlo, sino que el sistema al realizar la busqueda
+                    en todos los campos y
+                    mostrara los archivos con mayor puntuacion deacuerdo a la palabra o frase buscada, ya sea
+                    segun el numero
+                    de coincidencias o tambien segun cuan exacta son las palabras o frases a lo que se desea
+                    encontrar.
+                </p>
+            </div>
+        </div>
+        <!--Georreferenciacion-->
+        <div class="col-md-4 center-block">
+            <img src="/img/SVG/Georreferenciacion.svg" style="width:50%;height:50%" class="center-block" />
+            <div class="center-block" style="width:80%;">
+                <h2 class="text-center">Georreferenciacion</h2>
+                <p>
+                    Tendras la posibilidad de publicar contenidos como Imgagenes y Videos que se
+                    visulizaran en un mapa virtual, permitiendo que las demas personas las
+                    visualicen a traves de la plataforma web.
+                </p>
+
+            </div>
+        </div>
+        <!--Manejo dinamico-->
+        <div class="col-md-4 center-block">
+            <img src="/img/SVG/DynamicProject.svg" style="width:50%;height:50%" class="center-block" />
+            <div class="center-block" style="width:80%;">
+                <h2 class="text-center">Manejo Dinamico</h2>
+                <p>
+                    MProject trabaja con un enfoque orientado a proyectos, permitiendo a las personas naturales
+                    u organizaciones hacer uso de este sistema.
+                    <br />
+                    Con dicho enfoque tendras la posibilidad de planear, organizar y controlar las actividades incluidas
+                    aquellas que se designen a otras personas.
+                </p>
+            </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+<link href="~/css/Index.css" rel="stylesheet" />
+<div id="area" class="row" style="">
+</div>
+<script type="text/javascript">
+
+    @* @if (@ViewBag.Pagina != null)
+    {
+        @:myajax('@ViewBag.key', '@ViewBag.idCar', '@ViewBag.idUsu');
+                                    @:$("#area").load("@ViewBag.Pagina");
+                                }*@
+
+
+
+    $.ajax({
+
+        // The 'type' property sets the HTTP method.
+        // A value of 'PUT' or 'DELETE' will trigger a preflight request.
+        type: 'GET',
+
+        // The URL to make the request to.
+        url: 'D:\UDENAR\BOOKS\ORGANIGRAMA2012vf.pdf',
+
+        // The 'contentType' property sets the 'Content-Type' header.
+        // The JQuery default for this property is
+        // 'application/x-www-form-urlencoded; charset=UTF-8', which does not trigger
+        // a preflight. If you set this value to anything other than
+        // application/x-www-form-urlencoded, multipart/form-data, or text/plain,
+        // you will trigger a preflight request.
+        contentType: 'text/plain',
+
+        xhrFields: {
+            // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
+            // This can be used to set the 'withCredentials' property.
+            // Set the value to 'true' if you'd like to pass cookies to the server.
+            // If this is enabled, your server must respond with the header
+            // 'Access-Control-Allow-Credentials: true'.
+            withCredentials: false
+        },
+
+        headers: {
+
+            // Set any custom headers here.
+            // If you set any non-simple headers, your server must include these
+            // headers in the 'Access-Control-Allow-Headers' response header.
+        },
+
+        success: function (d) {
+            // Here's where you handle a successful response.
+            alert(d);
+        },
+
+        error: function () {
+            // Here's where you handle an error response.
+            // Note that if the error was due to a CORS issue,
+            // this function will still fire, but there won't be any additional
+            // information about the error.
+        }
+    });
+
+
+</script>

@@ -6,6 +6,8 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Data.Entity;
+using Microsoft.Framework.ConfigurationModel;
 
 namespace MProjectWeb
 {
@@ -27,8 +29,11 @@ namespace MProjectWeb
                 //}
                 );
 
+           // services.AddEntityFramework()
+           //.AddSqlite();
+
             services.AddEntityFramework()
-           .AddSqlite();
+                .AddNpgsql();
 
             services.AddMvc();
         }

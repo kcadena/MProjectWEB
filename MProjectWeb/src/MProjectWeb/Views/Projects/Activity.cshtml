@@ -29,14 +29,14 @@
 
     if (ViewBag.id_prj == null)
     {
-
-        <div class="row">
-            <h5>
+        <div>
+            <div class="alert alert-danger fade in center-block" style="position:relative;width:100%">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>Error!</strong>
                 No ha seleccionado un proyecto para mostrar detalles,
                 <br />Por favor seleccione un proyecto en la opcion Proyectos
-            </h5>
+            </div>
         </div>
-
     }
     else
     {
@@ -52,7 +52,7 @@
                     {
                         <div class="col-lg-4 col-md-6">
                             <div class="panel panel-primary">
-                                <div class="panel-heading open-folder" id_extra="@x.id_characteristic">
+                                <div class="panel-heading open-folder" id_extra="@x.idCar">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <i class="fa fa-folder-open fa-5x"></i>
@@ -60,11 +60,15 @@
                                         <div class="col-xs-9 text-right">
                                             <div style="position:relative; font-size:30px"
                                                  class="text-right">
-                                                @x.name
+                                                @x.nom
                                             </div>
                                             <hr />
                                             <div class="row" style="margin-right:3px">
-                                                @x.description
+                                                @x.desc
+                                            </div>
+                                            <hr style="width:50%; margin-right:0"/>
+                                            <div class="row" style="margin-right:3px">
+                                                Estado:  @x.sta
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +84,7 @@
                                     <ul class="dropdown-menu"
                                         aria-labelledby="dropdown_opt_footer"
                                         style="position:relative;width:100%"
-                                        id_extra="@x.id_characteristic">
+                                        id_extra="@x.idCar">
                                         <li><a class="opt_footer_files">Archivos/Documentos</a></li>
                                         <li><a class="opt_footer_statistics">Estadisticas</a></li>
                                         <li role="separator" class="divider"></li>
@@ -96,7 +100,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="panel col-pan">
                                 @{
-                                    if (x.type == 1)
+                                    if (x.folder == 1)
                                     {
                                         <script>
                                             $(".col-pan").addClass('panel-green');
@@ -111,11 +115,11 @@
                                 }
                                 <!-- header -->
                                 <div class="panel-heading  open-folder"  
-                                     id_extra="@x.id_characteristic" 
+                                     id_extra="@x.idCar" 
                                      style="height:30px">
                                     <div class="row">
                                         <div class="text-center" style="margin-top:-5px">
-                                            @x.name
+                                            @x.nom
                                         </div>
                                     </div>
                                 </div>
@@ -123,11 +127,11 @@
                                 <div class="panel-body">
                                     <div style="margin-left:5px">
                                         <div class="">
-                                            Descripcion: <span>@x.description</span>
+                                            Descripcion: <span>@x.desc</span>
                                         </div>
                                         <hr />
                                         <div class="">
-                                            Estado: <span>@x.state</span>
+                                            Estado: <span>@x.sta</span>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +146,7 @@
                                     <ul class="dropdown-menu"
                                         aria-labelledby="dropdown_opt_footer"
                                         style="position:relative;width:100%"
-                                        id_extra="@x.id_characteristic">
+                                        id_extra="@x.idCar">
                                         <li><a class="opt_footer_files">Archivos/Documentos</a></li>
                                         <li><a class="opt_footer_statistics">Estadisticas</a></li>
                                         <li role="separator" class="divider"></li>
@@ -158,7 +162,10 @@
                 <script>
                     $(".opt_footer_files").click(function () {
                         var id = $(this).parent().parent().attr("id_extra");
-                        alert("files");
+                        var x = "@Context.Session.GetString("id_prj")";
+                        x = x.split('-');
+                        showFiles(x[0], "@Context.Session.GetString("idUsu")", id, "img", ""); //keym,usu,car,type, text=>palabra o frase a buscar
+                        //alert("car "+id+"  key "+x[0]+" usu: ");
                     });
                     $(".opt_footer_statistics").click(function () {
                         var id = $(this).parent().parent().attr("id_extra");

@@ -7,16 +7,19 @@ namespace MProjectWeb.ViewModels
 {
     public class ActivityList
     {
-        public long id_act { get; set; }
-        public long id_characteristic { get; set; }
-        public long? par_characteristic { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public long folder { get; set; }
-        public string state { get; set; }
+        public long idCar { get; set; }
+        public long idUsu { get; set; }
+        public long idAct { get; set; }
+        public long parCar { get; set; }
 
-        //type 1=>folders 2=>actividades de folders 3=>actividades de actividades
-        public int type { get; set; }
+        public string keyM { get; set; }
+        public string nom { get; set; }
+        public string desc { get; set; }
+        public string sta { get; set; }
+
+        public int pos { get; set; }
+        public int folder { get; set; }
+
     }
 
     public class ActivityInfo

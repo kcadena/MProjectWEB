@@ -1,12 +1,184 @@
-﻿@{
+﻿<script src="~/js/multimedia.js"></script>
+<link href="~/css/multimedia.css" rel="stylesheet" />
+@using Microsoft.AspNet.Http;
+
+@{
     Layout = null;
 }
 <div class="asd">
     <h1 class="page-header">
         <!-- Title of page -->
         Archivos y Documentos
-        <small>
+        <small id="typ">
             <!-- SubTitle of page -->
+            @{
+                string tp = ViewBag.type;
+                switch (tp)
+                {
+                    case "img":
+                        <script>
+                            $("#typ").html("Imagenes");
+                        </script>
+                        break;
+                    case "vid":
+                        <script>
+                            $("#typ").html("Videos");
+                        </script>
+                        break;
+                    case "sou":
+                        <script>
+                            $("#typ").html("Sonidos");
+                        </script>
+                        break;
+                    case "doc":
+                        <script>
+                            $("#typ").html("Documentos");
+                        </script>
+                        break;
+                }
+            }
         </small>
     </h1>
+    <div class="row center-block" style="width:80%">
+        <button id="btnImg" type="button" class="btn btn-primary col-md-3">Imagenes</button>
+        <button id="btnVid" type="button" class="btn btn-success col-md-3">Videos</button>
+        <button id="btnSou" type="button" class="btn btn-info col-md-3">Sonidos</button>
+        <button id="btnDoc" type="button" class="btn btn-warning col-md-3">Documentos</button>
+    </div>
+
 </div>
+
+<br /><br /><br />
+
+<script>
+    //Acciones que generan los click de los botones de las opciones
+    $("#btnImg").click(function () {
+        showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "img", "");
+    });
+    $("#btnVid").click(function () {
+        showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "vid", "");
+    });
+    $("#btnSou").click(function () {
+        showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "sou", "");
+    });
+    $("#btnDoc").click(function () {
+        showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "vid", "");
+    });
+</script>
+
+@{
+    if (ViewBag.st)
+    {
+        List<Lucene.Net.Search.ScoreDoc> lstDoc = ViewBag.lstDoc;
+        if (lstDoc != null)
+        {
+            foreach (var x in lstDoc)
+            {
+                Lucene.Net.Documents.Document doc = ViewBag.searcher.Doc(x.Doc);
+                Dictionary<string, string> inf = new Dictionary<string, string>();
+
+                switch (tp)
+                {
+                    /*================================   Imagenes   ================================*/
+                    case "img":
+
+                               <!--  
+                                 doc.Get("srv")
+                                 doc.Get("nom")
+                                 doc.Get("desc")
+                                 doc.Get("type")
+                                 doc.Get("keym")
+                                 doc.Get("idUsu")
+                                 doc.Get("idFile")
+                                 doc.Get("idCar")
+                               -->
+
+
+                        <a href="#">
+                            <div class="col-md-3" style="height:300px">
+                                <div class="thumbnail">
+                                    <div class="caption">
+                                        <h4>@doc.Get("nom")</h4>
+                                        <p>@doc.Get("desc")</p>
+
+                                    </div>
+                                    <div style="height:290px;">
+                                        <img src="@doc.Get("srcServ")" alt="img" class="img-responsive" style="vertical-align:middle" />
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        break;
+                    /*================================   Videos   ================================*/
+                    case "vid":
+                        <div src="@doc.Get("srcServ")"
+                             nom="@doc.Get("nom")"
+                             desc="@doc.Get("desc")"
+                             type="@doc.Get("type")"
+                             keym="@doc.Get("keym")"
+                             idUsu="@doc.Get("idUsu")"
+                             idFile="@doc.Get("idFile")"
+                             idCar="@doc.Get("idCar")"
+                             class="col-md-3">
+                            <video style="position:relative;width:90%;height:100%;margin-left:5%"
+                                   controls="controls" tabindex="0">
+                                <source src="@doc.Get("srcServ")" type="video/mp4">
+                                <source src="@doc.Get("srcServ")" type="video/ogg">
+                                <source src="@doc.Get("srcServ")" type="video/webm">
+                                <source src="@doc.Get("srcServ")" type='video/x-matroska'>
+                            </video>
+                            
+                            @*<img id="example1" src="@doc.Get("srcServ")" rel:animated_src="@doc.Get("srcServ")" rel:auto_play="0" width="467" height="375" />*@
+                            
+                        </div>
+                        break;
+                    /*================================   Sonidos   ================================*/
+                    case "sou":
+                        <div src="@doc.Get("srv")"
+                             nom="@doc.Get("nom")"
+                             desc="@doc.Get("desc")"
+                             type="@doc.Get("type")"
+                             keym="@doc.Get("keym")"
+                             idUsu="@doc.Get("idUsu")"
+                             idFile="@doc.Get("idFile")"
+                             idCar="@doc.Get("idCar")"
+                             class="col-md-3">
+                            <video style="position:relative;width:90%;height:100%;margin-left:5%"
+                                   controls="controls" tabindex="0">
+                                <source src=@doc.Get("srv") type="video/mp4">
+                            </video>
+                        </div>
+                        break;
+                    /*================================   Documentos   ================================*/
+                    case "doc":
+                        <div src="@doc.Get("srv")"
+                             nom="@doc.Get("nom")"
+                             desc="@doc.Get("desc")"
+                             type="@doc.Get("type")"
+                             keym="@doc.Get("keym")"
+                             idUsu="@doc.Get("idUsu")"
+                             idFile="@doc.Get("idFile")"
+                             idCar="@doc.Get("idCar")"
+                             class="col-md-3">
+                            <video style="position:relative;width:90%;height:100%;margin-left:5%"
+                                   controls="controls" tabindex="0">
+                                <source src=@doc.Get("srv") type="video/mp4">
+                            </video>
+                        </div>
+                        break;
+                }
+
+            }
+        }
+    }
+    else
+    {
+        <div>
+            <div class="alert alert-danger fade in center-block" style="position:relative;width:100%">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>Error!</strong>
+                No se han encontrado recursos correspondientes a esta actividad / proyecto.  
+            </div>
+        </div>
+    }
+}

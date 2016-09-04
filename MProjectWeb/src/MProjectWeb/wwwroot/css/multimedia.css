@@ -3,7 +3,7 @@
 }
 
 
-/*   Pictures  */
+/*===================================================   Pictures   ===================================================*/
 
    .mlt-cont{
         margin:auto;
@@ -21,24 +21,11 @@
     position:relative;
    
 }
-
-/*   Videos  */
-
-
-
-/*   publicaciones   */
-.news{
-    position:relative;
-    width:80%;
+body {
+  padding-top: 50px;
 }
-
-
-
-
-
-
-
-
+ 
+/* Aparesca texto mouse hoever*/
 .thumbnail {
     position:relative;
     overflow:hidden;
@@ -48,7 +35,7 @@
     position:absolute;
     top:0;
     right:0;
-    background:rgba(66, 139, 202, 0.75);
+    background:rgba(0, 17, 60, 0.71);
     width:100%;
     height:100%;
     padding:2%;
@@ -57,3 +44,32 @@
     color:#fff !important;
     z-index:2;
 }
+
+.content {
+    width:600px;
+    height:400px;
+    line-height:400px;
+    margin:0px auto;
+    text-align:center;
+    background-color:#CCCCCC;
+}
+
+img{
+    vertical-align:middle
+}
+
+/*===================================================   Videos   ===================================================*/
+
+
+
+/*===================================================   Sonidos   ===================================================*/
+
+
+
+
+/*===================================================   Documentos   ===================================================*/
+
+
+
+
+

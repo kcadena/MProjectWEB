@@ -1,12 +1,13 @@
 ﻿@using Microsoft.AspNet.Http;
 @using Newtonsoft.Json.Linq;
 @using Newtonsoft.Json;
-@using MProjectWeb.Models.DBControllers;
+@using MProjectWeb.Models.ModelController;
 @{
     JObject ops = JsonConvert.DeserializeObject<JObject>(Context.Session.GetString("op"));
     string st = ops.ToString().Replace("&#xD;&#xA;", "");
     string c = st.Substring(1, 2);
     st = st.Replace(c, "");
+    st = st;
 }
 
 <!DOCTYPE html>
@@ -118,39 +119,43 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse" id="axd">
                 <ul class="nav navbar-nav side-nav" id="kel">
-
                     @{
+                        //op => corresponde a las opciones provenientes del archivos JSON WebData
+                        //se arma la estructura de las opciones
                         JObject op = JsonConvert.DeserializeObject<JObject>(Context.Session.GetString("op"));
-                        foreach (var x in op.GetValue("menu"))
+                        dynamic a = JObject.Parse(Context.Session.GetString("op"));
+                        foreach (var x in a.menu)
                         {
-
-                            String con = (string)x.ElementAt(0).ElementAt(0).ElementAt(1).First().First();
-                            String act = (string)x.ElementAt(0).ElementAt(0).ElementAt(2).First().First();
-
-                            <li>
-                                <a style="color:darkgray"
-                                   data-toggle="collapse" data-target="#op_@act"
-                                   id="@act" class="kl">
-                                    @x.ElementAt(0).ElementAt(0).ElementAt(0).First().First()
-                                </a>
-
-                                <ul id="op_@act" class="collapse" style="background-color:darkslategrey;">
-                                    @{
-                                        foreach (var y in x.ElementAt(1).ElementAt(0))
-                                        {
-                                            <li>
-                                                <a style="color:whitesmoke"
-                                                   id="@y.ElementAt(0).ElementAt(0).ElementAt(2).ElementAt(0).ElementAt(0)">
-                                                    @y.ElementAt(0).ElementAt(0).ElementAt(0).ElementAt(0).ElementAt(0)
-                                                </a>
-                                            </li>
+                            try
+                            {
+                                String con = (string)x.item.controller;
+                                String act = (string)x.item.action;
+                                <li>
+                                    <a style="color:darkgray"
+                                       data-toggle="collapse" data-target="#op_@act"
+                                       id="@act" class="kl">
+                                        @x.item.name
+                                    </a>
+                                    <ul id="op_@act" class="collapse" style="background-color:darkslategrey;">
+                                        @{
+                                            foreach (var y in x.items)
+                                            {
+                                                <li>
+                                                    <a style="color:whitesmoke"
+                                                       id="@y.action">
+                                                        @y.name
+                                                    </a>
+                                                </li>
+                                            }
                                         }
-                                    }
-                                </ul>
-
-                            </li>
-                                        }
+                                    </ul>
+                                </li>
+                            }
+                            catch (Exception ERR) { }
+                        }
                     }
+
+                   
                     <li>
                         <a asp-controller="Projects" asp-action="Index" class="abt"><i class="fa fa-fw fa-dashboard"></i> About</a>
                     </li>
@@ -195,6 +200,7 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="~/js/a.js"></script>
+<script src="~/js/multimedia.js"></script>
 <script>
     $.ajaxSetup({ cache: false });
 </script>

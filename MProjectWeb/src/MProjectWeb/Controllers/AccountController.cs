@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Http;
 
-using MProjectWeb.Models.Sqlite;
-using MProjectWeb.Models.DBControllers;
+using MProjectWeb.Models.postgres;
+using MProjectWeb.Models.ModelController;
 
 using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
@@ -24,7 +24,7 @@ namespace MProjectWeb.Controllers
     public class AccountController : Controller
     {
         protected DBCUsuarios dbu;
-        private MProjectDeskSQLITEContext db = new MProjectDeskSQLITEContext();
+        private MProjectContext db = new MProjectContext();
         public AccountController()
         {
             dbu = new DBCUsuarios();
@@ -39,9 +39,10 @@ namespace MProjectWeb.Controllers
             if (q != null)
             {
                 HttpContext.Session.SetString("UsuNam", q.nombre + " " + q.apellido);
-                HttpContext.Session.SetString("UsuID", q.id_usuario.ToString());
+                HttpContext.Session.SetString("idUsu", q.id_usuario.ToString());
                 return RedirectToAction("Index", "Projects");
             }
+            TempData["err"] = true;
             return RedirectToAction("Index", "Index");
         }
 
@@ -56,7 +57,7 @@ namespace MProjectWeb.Controllers
                 usu.nombre = q.nombre;
                 usu.e_mail = q.e_mail;
                 usu.pass = q.pass;
-                usu.id_usuario = q.id_usuario;
+                usu.id_usuario =(int) q.id_usuario;
 
                 try
                 {
@@ -71,7 +72,7 @@ namespace MProjectWeb.Controllers
                 }
 
                 HttpContext.Session.SetString("UsuNam", q.nombre + " " + q.apellido);
-                HttpContext.Session.SetString("UsuID", q.id_usuario.ToString());
+                HttpContext.Session.SetString("idUsu", q.id_usuario.ToString());
                 return RedirectToAction("Index", "Projects");
             }
             else

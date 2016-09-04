@@ -1,4 +1,4 @@
-﻿@using MProjectWeb.Models.DBControllers
+﻿@using MProjectWeb.Models.ModelController
 @using Microsoft.AspNet.Http;
 
 @using Newtonsoft.Json;
@@ -6,8 +6,29 @@
     Layout = null;
 }
 @{
-    List<ProjectsUsers> ax_lst_prj = (List<ProjectsUsers>)ViewBag.projects;
-    var lst_prj = ax_lst_prj.GroupBy(u => new { u.id_pro, u.id_usu }).ToList();
+    bool st = false;
+    List<ProjectsUsers> ax_lst_prj = null;
+    try
+    {
+        if (ViewBag.projects != null)
+        {
+            try
+            {
+                ax_lst_prj = (List<ProjectsUsers>)ViewBag.projects;
+                st = true;
+            }
+            catch
+            {
+                <script>
+                    alert("No se pueden cargar los proyectos de esta cuenta.");
+                </script>
+            }
+
+        }
+
+    }
+    catch { }
+
 }
 
 <div class="asd">
@@ -27,43 +48,62 @@
             En esta seccion mostrara informacion correspondiente a todos los proyectos que posee, ademas de una infomacion general de estos.<br />
             Por favor seleccione uno de ellos para poder acceder a ver mas detalladamente su informacion.<br />
 
-            <div class="alert alert-warning">
+            <div class="alert alert-warning" id="nota">
                 <strong>NOTA: </strong>Para poder ver informacion con las subopciones de Proyectos, es necesario seleccionar uno de ellos, de lo contrario no podra ver su informacion.
-            </div>
 
+            </div>
+            @{if (!st)
+                {
+                    <div class="alert alert-danger">
+                        <strong>NOTA: </strong>No se han encontrado proyectos relacionados con esta cuenta de usuario.
+                    </div>
+                }
+
+            }
 
         </p>
     </div>
 </div>
 <div class="row">
     @{
-        foreach (var x in lst_prj)
+        try
         {
-            <div class="col-lg-4 col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            @{long dat = -1; }
-                            @foreach (var z in x)
-                            {
-                                dat = (long)z.id_pro_car;
-                                <div class="row" style="margin-left:10px">@z.desc : @z.valor</div>
-                            }
-                            <div class="hidden" id="dat_@dat">@dat</div>
+            if (ax_lst_prj != null)
+            {
+                var lst_prj = ax_lst_prj.GroupBy(u => new { u.id_pro, u.id_usu }).ToList();
+                foreach (var x in lst_prj)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <!--    ---------------------------------   Datos plantilla  --------------------------------                -->
+                                    @{long dat = -1; }
+                                    @foreach (var z in x)
+                                    {
+                                        dat = (long)z.id_pro_car;
+                                        <div class="row" style="margin-left:10px">@z.desc : @z.valor</div>
+                                    }
+                                    <div class="hidden" id="dat_@dat">@dat</div>
+                                </div>
+                            </div>
+                            <a id="prj_@x.First().keym-@x.First().id_pro_car">
+                                <div class="panel-footer prj_op">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
                         </div>
+
                     </div>
-                    <a id="prj_@x.First().id_pro_car">
-                        <div class="panel-footer prj_op">
-                            <span class="pull-left">View Details</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
 
-            </div>
+                                                }
 
-                                }
+                                            }
+
+                                        }
+                                        catch { }
     }
 
     <div class="col-lg-4 col-md-4" id="panel_prj">
