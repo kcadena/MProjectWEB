@@ -58,15 +58,58 @@ namespace MProjectWeb.Controllers
             try
             {
                 string[] pro = p.Split('-');
-                caracteristicas car = (from x in dbMP.caracteristicas
-                                       where x.keym == Convert.ToInt64(pro[0]) &&
-                                       x.id_usuario == Convert.ToInt64(pro[2]) &&
-                                       x.id_caracteristica == Convert.ToInt64(pro[1])
-                                       select x).First();
-                ViewBag.key = car.keym;
-                ViewBag.idCar = car.id_caracteristica;
-                ViewBag.idUsu = car.id_usuario;
-                //ViewBag.Pagina = car.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio+car.proyectos.First().nombre.ToLower().Replace(" ","")+".html";//ruta 
+                //caracteristicas car = (from x in dbMP.caracteristicas
+                //                       where x.keym == Convert.ToInt64(pro[0]) &&
+                //                       x.id_usuario == Convert.ToInt64(pro[2]) &&
+                //                       x.id_caracteristica == Convert.ToInt64(pro[1])
+                //                       select x).First();
+
+                try
+                {
+                    var car = (from x in dbMP.caracteristicas
+                               join y in dbMP.proyectos on new { A = x.keym, B = x.id_caracteristica, C = x.id_usuario } equals new { A = y.keym, B = y.id_caracteristica, C = y.id_usuario }
+
+                               where x.keym == Convert.ToInt64(pro[0]) &&
+                                       x.id_caracteristica == Convert.ToInt64(pro[1]) &&
+                                       x.id_usuario == Convert.ToInt64(pro[2])
+                               select new
+                               {
+                                   x.keym,
+                                   x.id_caracteristica,
+                                   x.id_usuario,
+                                   y.nombre,
+                                   y.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio
+                               }).First();
+
+
+                    ViewBag.key = car.keym;
+                    ViewBag.idCar = car.id_caracteristica;
+                    ViewBag.idUsu = car.id_usuario;
+                    ViewBag.Pagina = car.ruta_repositorio + car.nombre.ToLower().Replace(" ", "") + ".html";//ruta 
+                }
+                catch
+                {
+                    var car = (from x in dbMP.caracteristicas
+                                  join y in dbMP.actividades on new { A = x.keym, B = x.id_caracteristica, C = x.id_usuario } equals new { A = y.keym, B = y.id_caracteristica, C = y.id_usuario }
+
+                                  where x.keym == Convert.ToInt64(pro[0]) &&
+                                       x.id_caracteristica == Convert.ToInt64(pro[1]) &&
+                                       x.id_usuario == Convert.ToInt64(pro[2])
+                                  select new
+                                  {
+                                      x.keym,
+                                      x.id_caracteristica,
+                                      x.id_usuario,
+                                      y.nombre,
+                                      y.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio
+                                  }).First();
+
+                    ViewBag.key = car.keym;
+                    ViewBag.idCar = car.id_caracteristica;
+                    ViewBag.idUsu = car.id_usuario;
+                    ViewBag.Pagina = car.ruta_repositorio + car.nombre.ToLower().Replace(" ", "") + ".html";//ruta 
+
+                }
                 //ViewBag.Pagina = "http://172.16.10.248/prueba%20web/principal1.html";
             }
             catch
@@ -377,6 +420,25 @@ namespace MProjectWeb.Controllers
 
             WebData wd = new WebData();
             return wd.defaultUser();
+        }
+        [HttpGet]
+        public List<string> getLinks(long key,long idcar,long usu)
+        {
+            try
+            {
+                //dynamic dat = Request.Form;
+                //long keym = Convert.ToInt64(dat["key"]);
+                //long idCar = Convert.ToInt64(dat["idcar"]);
+                //long idUsu = Convert.ToInt64(dat["usu"]);
+
+                DBCActivities act = new DBCActivities();
+                List<string> lst = act.getLinks(key,idcar,usu);
+                return lst;
+            }catch
+            {
+                return null;
+            }
+            
         }
     }
 }

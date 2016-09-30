@@ -13,6 +13,7 @@ namespace MProjectWeb.Models.ModelController
     {
 
         MProjectContext db;
+        public List<string> llink = null;
         public DBCActivities()
         {
             db = new MProjectContext();
@@ -96,18 +97,76 @@ namespace MProjectWeb.Models.ModelController
                 return null;
             }
         }
-
+        
         public List<string> getLinks(long key, long idcar, long usu)
         {
-            List<string> llink = new List<string>();
+            llink = new List<string>();
             try
             {
                 caracteristicas car = (from x in db.caracteristicas
                                          where x.keym == key && x.id_caracteristica == idcar && x.id_usuario == usu
                                          select x).First();
+                //Crea opcion para retroceder en la navegacion de las caracteristicas que poseen paginaWeb
+                try
+                {
+                    //segun actividades
+                    var carPar = (from x in db.caracteristicas
+                                  join y in db.actividades on new { A = x.keym, B = x.id_caracteristica, C = x.id_usuario } equals new { A = y.keym, B = y.id_caracteristica, C = y.id_usuario }
+
+                                  where x.keym == car.keym_padre &&
+                                          x.id_caracteristica == car.id_caracteristica_padre &&
+                                          x.id_usuario == car.id_usuario_padre
+                                  select new
+                                  {
+                                      x.keym,
+                                      x.id_caracteristica,
+                                      x.id_usuario,
+                                      y.nombre,
+                                      y.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio
+                                  }).First();
 
 
-                getLinksRecursive(car, llink);
+
+                    string idPadre = carPar.keym + "," + carPar.id_caracteristica + "," + carPar.id_usuario;
+                    string rutaPadre = carPar.ruta_repositorio + carPar.nombre + ".html";
+
+                    llink.Add(idPadre + "-" + "Atras" + "-" + rutaPadre);
+                }
+                catch
+                {
+                    try
+                    {
+                        //segun proyectos
+                        var carPar = (from x in db.caracteristicas
+                                      join pro in db.proyectos on new { A = x.keym, B = x.id_caracteristica, C = x.id_usuario } equals new { A = pro.keym, B = pro.id_caracteristica, C = pro.id_usuario }
+
+                                      where x.keym == car.keym_padre &&
+                                              x.id_caracteristica == car.id_caracteristica_padre &&
+                                              x.id_usuario == car.id_usuario_padre
+                                      select new
+                                      {
+                                          x.keym,
+                                          x.id_caracteristica,
+                                          x.id_usuario,
+                                          pro.nombre,
+                                          pro.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio
+                                      }).First();
+
+
+
+
+                        string idPadre = carPar.keym + "," + carPar.id_caracteristica + "," + carPar.id_usuario;
+                        string rutaPadre = carPar.ruta_repositorio + carPar.nombre + ".html";
+
+                        llink.Add(idPadre + "-" + "Atras" + "-" + rutaPadre);
+                    }
+                    catch
+                    {
+                       
+                    }
+                }
+
+                getLinksRecursive(car);
 
                 
             }
@@ -116,21 +175,52 @@ namespace MProjectWeb.Models.ModelController
             return llink;
         }
 
-        private void getLinksRecursive(caracteristicas car, List<string> llink)
+        private void getLinksRecursive(caracteristicas car)
         {
             try
             {
+                //lista de hijos de la caracteristica car
                 var lstCar = (
                     from x in db.caracteristicas
                     join y in db.actividades 
                     on new { A = x.keym, B = x.id_caracteristica, C = x.id_usuario } equals new { A = y.keym_car, B = y.id_caracteristica, C = y.id_usuario_car } 
-                    into nx
-                    from z in nx
-                    select z
+                    
+                    where (
+                        x.keym_padre == car.keym &&
+                        x.id_caracteristica_padre == car.id_caracteristica &&
+                        x.id_usuario_padre == car.id_usuario )
+
+                    select new {
+                        x,
+                        x.keym,
+                        y.id_actividad,
+                        x.id_caracteristica,
+                        x.id_usuario,
+                        y.nombre,
+                        y.id_usuarioNavigation.repositorios_usuarios,
+                        x.publicacion_web
+                    }
                     );
                 foreach(var x in lstCar)
                 {
-                    if(x)
+                    if ((bool)x.publicacion_web)
+                    {
+                        try
+                        {
+                            string id = x.keym + "," + x.id_caracteristica + "," + x.id_usuario;
+                            string nombre = x.nombre;
+                            string ruta = x.repositorios_usuarios.ruta_repositorio + x.nombre + ".html";
+                            llink.Add(id + "-" + nombre + "-" + ruta);
+                        }
+                        catch
+                        {
+                            llink.Add("ERROR");
+                        }
+                    }
+                    else
+                    {
+                        getLinksRecursive(x.x);
+                    }
                 }
             }
             catch { }
