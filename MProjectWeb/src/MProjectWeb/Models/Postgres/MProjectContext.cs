@@ -7,7 +7,7 @@ namespace MProjectWeb.Models.postgres
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(@"PORT=5432;TIMEOUT=15;POOLING=True;MINPOOLSIZE=1;MAXPOOLSIZE=20;COMMANDTIMEOUT=20;PASSWORD=123;USER ID=postgres;HOST=localhost;DATABASE=MProject");
+            options.UseNpgsql(@"PORT=5432;TIMEOUT=15;POOLING=True;MINPOOLSIZE=1;MAXPOOLSIZE=20;COMMANDTIMEOUT=20;PASSWORD=123;USERID=postgres;HOST=localhost;DATABASE=MProject");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,8 +15,6 @@ namespace MProjectWeb.Models.postgres
             modelBuilder.Entity<actividades>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_actividad, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.descripcion)
                     .IsRequired()
@@ -30,16 +28,14 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.actividades).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.caracteristicas).WithMany(p => p.actividades).HasForeignKey(d => new { d.keym, d.id_caracteristica, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.caracteristicas).WithMany(p => p.actividades).HasForeignKey(d => new { d.keym_car, d.id_caracteristica, d.id_usuario_car }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<archivos>(entity =>
             {
-                entity.HasKey(e => new { e.keym, e.id_archivo, e.id_usuario });
+                entity.HasKey(e => new { e.keym, e.id_archivo, e.id_usuario_own });
 
-                entity.Property(e => e.keym).HasColumnType("varchar");
-
-                entity.Property(e => e.contenido).HasColumnType("varchar");
+                entity.Property(e => e.descripcion).HasColumnType("varchar");
 
                 entity.Property(e => e.fecha_carga).HasColumnType("date");
 
@@ -49,18 +45,18 @@ namespace MProjectWeb.Models.postgres
                     .IsRequired()
                     .HasColumnType("varchar");
 
-                entity.HasOne(d => d.id_tipo_archivoNavigation).WithMany(p => p.archivos).HasForeignKey(d => d.id_tipo_archivo).OnDelete(DeleteBehavior.Restrict);
+                entity.Property(e => e.subtitulo).HasColumnType("varchar");
 
-                entity.HasOne(d => d.caracteristicas).WithMany(p => p.archivos).HasForeignKey(d => new { d.keym, d.id_caracteristica, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.Property(e => e.tipo).HasColumnType("varchar");
+
+                entity.Property(e => e.titulo).HasColumnType("varchar");
+
+                entity.HasOne(d => d.caracteristicas).WithMany(p => p.archivos).HasForeignKey(d => new { d.keym_car, d.id_caracteristica, d.id_usuario_car }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<caracteristicas>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_caracteristica, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
-
-                entity.Property(e => e.costos).HasColumnType("varchar");
 
                 entity.Property(e => e.estado)
                     .IsRequired()
@@ -76,9 +72,7 @@ namespace MProjectWeb.Models.postgres
 
                 entity.Property(e => e.porcentaje_cumplido).HasDefaultValueSql("0");
 
-                entity.Property(e => e.presupuesto).HasColumnType("varchar");
-
-                entity.Property(e => e.recursos).HasColumnType("varchar");
+                entity.Property(e => e.publicacion_web).HasDefaultValueSql("false");
 
                 entity.Property(e => e.tipo_caracteristica)
                     .IsRequired()
@@ -89,14 +83,12 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.usuario_asignadoNavigation).WithMany(p => p.caracteristicasNavigation).HasForeignKey(d => d.usuario_asignado);
 
-                entity.HasOne(d => d.caracteristicasNavigation).WithMany(p => p.InversecaracteristicasNavigation).HasForeignKey(d => new { d.keym, d.id_caracteristica_padre, d.id_usuario });
+                entity.HasOne(d => d.caracteristicasNavigation).WithMany(p => p.InversecaracteristicasNavigation).HasForeignKey(d => new { d.keym_padre, d.id_caracteristica_padre, d.id_usuario_padre });
             });
 
             modelBuilder.Entity<costos>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_costo, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.nombre)
                     .IsRequired()
@@ -104,14 +96,12 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.costos).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.caracteristicas).WithMany(p => p.costosNavigation).HasForeignKey(d => new { d.keym, d.id_caracteristica, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.caracteristicas).WithMany(p => p.costosNavigation).HasForeignKey(d => new { d.keym_car, d.id_caracteristica, d.id_usuario_car }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<meta_datos>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_meta_dato, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.descripcion)
                     .IsRequired()
@@ -127,8 +117,6 @@ namespace MProjectWeb.Models.postgres
             modelBuilder.Entity<plantillas>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_plantilla, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.descripcion)
                     .IsRequired()
@@ -147,22 +135,18 @@ namespace MProjectWeb.Models.postgres
             {
                 entity.HasKey(e => new { e.keym, e.id_plantilla_meta_dato, e.id_usuario });
 
-                entity.Property(e => e.keym).HasColumnType("varchar");
-
                 entity.Property(e => e.fecha_ultima_modificacion).HasColumnType("date");
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.plantillas_meta_datos).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.meta_datos).WithMany(p => p.plantillas_meta_datos).HasForeignKey(d => new { d.keym, d.id_meta_dato, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.meta_datos).WithMany(p => p.plantillas_meta_datos).HasForeignKey(d => new { d.keym_met, d.id_meta_dato, d.id_usuario_met }).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.plantillas).WithMany(p => p.plantillas_meta_datos).HasForeignKey(d => new { d.keym, d.id_plantilla, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.plantillas).WithMany(p => p.plantillas_meta_datos).HasForeignKey(d => new { d.keym_pla, d.id_plantilla, d.id_usuario_pla }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<presupuesto>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_presupuesto, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.fecha_ultima_modificacion).HasColumnType("date");
 
@@ -172,14 +156,12 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.presupuesto).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.caracteristicas).WithMany(p => p.presupuestoNavigation).HasForeignKey(d => new { d.keym, d.id_caracteristica, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.caracteristicas).WithMany(p => p.presupuestoNavigation).HasForeignKey(d => new { d.keym_car, d.id_caracteristica, d.id_usuario_car }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<proyectos>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_proyecto, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.descripcion)
                     .IsRequired()
@@ -197,14 +179,12 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.proyectos).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.caracteristicas).WithMany(p => p.proyectos).HasForeignKey(d => new { d.keym, d.id_caracteristica, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.caracteristicas).WithMany(p => p.proyectos).HasForeignKey(d => new { d.keym_car, d.id_caracteristica, d.id_usuario_car }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<proyectos_meta_datos>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_proyecto_meta_dato, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.fecha_ultima_modificacion).HasColumnType("date");
 
@@ -218,14 +198,12 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.proyectos_meta_datos).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.proyectos).WithMany(p => p.proyectos_meta_datos).HasForeignKey(d => new { d.keym, d.id_proyecto, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.proyectos).WithMany(p => p.proyectos_meta_datos).HasForeignKey(d => new { d.keym_pro, d.id_proyecto, d.id_usuario_pro }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<recursos>(entity =>
             {
                 entity.HasKey(e => new { e.keym, e.id_recurso, e.id_usuario });
-
-                entity.Property(e => e.keym).HasColumnType("varchar");
 
                 entity.Property(e => e.cantidad).HasDefaultValueSql("1");
 
@@ -235,7 +213,7 @@ namespace MProjectWeb.Models.postgres
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithMany(p => p.recursos).HasForeignKey(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.caracteristicas).WithMany(p => p.recursosNavigation).HasForeignKey(d => new { d.keym, d.id_caracteristica, d.id_usuario }).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.caracteristicas).WithMany(p => p.recursosNavigation).HasForeignKey(d => new { d.keym_car, d.id_caracteristica, d.id_usuario_car }).OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<repositorios_usuarios>(entity =>
@@ -251,17 +229,6 @@ namespace MProjectWeb.Models.postgres
                     .HasColumnType("varchar");
 
                 entity.HasOne(d => d.id_usuarioNavigation).WithOne(p => p.repositorios_usuarios).HasForeignKey<repositorios_usuarios>(d => d.id_usuario).OnDelete(DeleteBehavior.Restrict);
-            });
-
-            modelBuilder.Entity<tipos_archivos>(entity =>
-            {
-                entity.HasKey(e => e.id_tipo_archivo);
-
-                entity.Property(e => e.id_tipo_archivo).ValueGeneratedNever();
-
-                entity.Property(e => e.nombre)
-                    .IsRequired()
-                    .HasColumnType("varchar");
             });
 
             modelBuilder.Entity<tipos_datos>(entity =>
@@ -326,7 +293,6 @@ namespace MProjectWeb.Models.postgres
         public virtual DbSet<proyectos_meta_datos> proyectos_meta_datos { get; set; }
         public virtual DbSet<recursos> recursos { get; set; }
         public virtual DbSet<repositorios_usuarios> repositorios_usuarios { get; set; }
-        public virtual DbSet<tipos_archivos> tipos_archivos { get; set; }
         public virtual DbSet<tipos_datos> tipos_datos { get; set; }
         public virtual DbSet<usuarios> usuarios { get; set; }
     }

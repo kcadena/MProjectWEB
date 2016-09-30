@@ -15,21 +15,26 @@ namespace MProjectWeb.Models.postgres
             recursosNavigation = new HashSet<recursos>();
         }
 
-        public string keym { get; set; }
-        public int id_caracteristica { get; set; }
-        public int id_usuario { get; set; }
-        public string costos { get; set; }
+        public long keym { get; set; }
+        public long id_caracteristica { get; set; }
+        public long id_usuario { get; set; }
+        public int? costos { get; set; }
         public string estado { get; set; }
         public DateTime? fecha_fin { get; set; }
         public DateTime? fecha_inicio { get; set; }
         public DateTime fecha_ultima_modificacion { get; set; }
-        public int? id_caracteristica_padre { get; set; }
+        public long? id_caracteristica_padre { get; set; }
+        public long? id_usuario_padre { get; set; }
+        public long? keym_padre { get; set; }
         public int porcentaje_asignado { get; set; }
         public int porcentaje_cumplido { get; set; }
-        public string presupuesto { get; set; }
-        public string recursos { get; set; }
+        public int? presupuesto { get; set; }
+        public int? presupuesto_restante { get; set; }
+        public bool? publicacion_web { get; set; }
+        public int? recursos { get; set; }
+        public int? recursos_restantes { get; set; }
         public string tipo_caracteristica { get; set; }
-        public int? usuario_asignado { get; set; }
+        public long? usuario_asignado { get; set; }
         public bool visualizar_superior { get; set; }
 
         public virtual ICollection<actividades> actividades { get; set; }

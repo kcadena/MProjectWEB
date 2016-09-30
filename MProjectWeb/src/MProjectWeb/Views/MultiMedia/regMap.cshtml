@@ -1,0 +1,58 @@
+﻿
+<div id="map" style="min-height:410px;min-width:100px;height:80%;width:80%;"></div>
+
+<script>
+    var drawingManager;
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 6
+        });
+
+        drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.MARKER,
+            drawingControl: true,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: [
+                  google.maps.drawing.OverlayType.MARKER,
+                  google.maps.drawing.OverlayType.POLYGON,
+                ]
+            }
+        });
+        drawingManager.setMap(map);
+
+        google.maps.event.addListener(drawingManager, 'markercomplete', function (marker) {
+            alert(marker.getPosition());
+            marker.setOptions({
+                draggable: true
+            });
+            google.maps.event.addListener(marker, 'dragend', function () {
+                // Put your code here when marker finish event drangend Example get LatLang 
+                /*
+                    var objLatLng = marker.getPosition().toString().replace("(", "").replace(")", "").split(',');
+                    Lat = objLatLng[0];
+                    Lat = Lat.toString().replace(/(\.\d{1,5})\d*$/, "$1");// Set 5 Digits after comma
+                    Lng = objLatLng[1];
+                    Lng = Lng.toString().replace(/(\.\d{1,5})\d*$/, "$1");// Set 5 Digits after comma
+    
+                */
+                alert(marker.getPosition());
+                
+            });
+            drawingManager.setOptions({ drawingControl: false });
+            drawingManager.setDrawingMode(null);
+            DeleteShapesGoogleMaps(marker);
+        });
+    }
+
+    function go() {
+        alert(drawingManager);
+    }
+
+
+</script>
+<a onclick="go()" class="btn">GO</a>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBV4qGNwaDfyRajpVTwVwTTeT12lvuC3RY&signed_in=true&libraries=drawing&callback=initMap"
+        async defer></script>

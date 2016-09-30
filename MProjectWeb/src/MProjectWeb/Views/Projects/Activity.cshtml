@@ -1,10 +1,10 @@
 ﻿@using MProjectWeb.ViewModels;
 @using Microsoft.AspNet.Http;
+
 @{
     Layout = null;
 
 }
-
 
 <div class="row">
     <h1 class="page-header col-md-11 col-xs-11">
@@ -12,14 +12,19 @@
         Actividades
     </h1>
     @{
-        if (ViewBag.prj != ViewBag.par && ViewBag.par != null)
+
+        if (ViewBag.prj != ViewBag.idCar && ViewBag.idCar != null)
         {
             <div class="col-md-1 col-xs-1"
-                    id="back-folder"
-                    id_extra="@ViewBag.par">
+                 id="back-folder"
+                 idCar="@ViewBag.idCar"
+                 usuCar="@ViewBag.usuCar">
+
                 <span id="icon-back" class="left fa fa-arrow-circle-left"></span>
             </div>
+
         }
+
     }
 </div>
 
@@ -51,8 +56,22 @@
                     if (x.folder == 0)
                     {
                         <div class="col-lg-4 col-md-6">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading open-folder" id_extra="@x.idCar">
+                            <div class="panel pan-fol">
+                                @{
+                                    if (x.usuCar == ViewBag.usuAct )
+                                    {
+                                        <script>
+                                            $(".pan-fol").addClass('panel-primary');
+                                        </script>
+                                    }
+                                    else
+                                    {
+                                        <script>
+                                            $(".pan-fol").addClass('panel-default');
+                                        </script>
+                                    }
+                                }
+                                <div class="panel-heading open-folder" idCar="@x.idCar" usuCar="@x.usuCar">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <i class="fa fa-folder-open fa-5x"></i>
@@ -84,7 +103,7 @@
                                     <ul class="dropdown-menu"
                                         aria-labelledby="dropdown_opt_footer"
                                         style="position:relative;width:100%"
-                                        id_extra="@x.idCar">
+                                        idCar="@x.idCar" usuCar="@x.usuCar">
                                         <li><a class="opt_footer_files">Archivos/Documentos</a></li>
                                         <li><a class="opt_footer_statistics">Estadisticas</a></li>
                                         <li role="separator" class="divider"></li>
@@ -100,7 +119,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="panel col-pan">
                                 @{
-                                    if (x.folder == 1)
+                                    if (x.usuCar == ViewBag.usuAct)
                                     {
                                         <script>
                                             $(".col-pan").addClass('panel-green');
@@ -115,7 +134,7 @@
                                 }
                                 <!-- header -->
                                 <div class="panel-heading  open-folder"  
-                                     id_extra="@x.idCar" 
+                                     idCar="@x.idCar" usuCar="@x.usuCar"
                                      style="height:30px">
                                     <div class="row">
                                         <div class="text-center" style="margin-top:-5px">
@@ -146,7 +165,7 @@
                                     <ul class="dropdown-menu"
                                         aria-labelledby="dropdown_opt_footer"
                                         style="position:relative;width:100%"
-                                        id_extra="@x.idCar">
+                                        idCar="@x.idCar" usuCar="@x.usuCar" >
                                         <li><a class="opt_footer_files">Archivos/Documentos</a></li>
                                         <li><a class="opt_footer_statistics">Estadisticas</a></li>
                                         <li role="separator" class="divider"></li>
@@ -161,27 +180,33 @@
                 }
                 <script>
                     $(".opt_footer_files").click(function () {
-                        var id = $(this).parent().parent().attr("id_extra");
+                        var car = $(this).parent().parent().attr("idCar");
+                        var usu = $(this).parent().parent().attr("usuCar");
                         var x = "@Context.Session.GetString("id_prj")";
                         x = x.split('-');
-                        showFiles(x[0], "@Context.Session.GetString("idUsu")", id, "img", ""); //keym,usu,car,type, text=>palabra o frase a buscar
+                        showFiles(x[0], usu , car, "img", ""); //keym,usu,car,type, text=>palabra o frase a buscar
                         //alert("car "+id+"  key "+x[0]+" usu: ");
                     });
                     $(".opt_footer_statistics").click(function () {
-                        var id = $(this).parent().parent().attr("id_extra");
+                        var id = $(this).parent().parent().attr("idCar");
                         alert("statistics");
                     });
                     $(".opt_footer_moreInf").click(function () {
-                        var id = $(this).parent().parent().attr("id_extra");
+                        var id = $(this).parent().parent().attr("idCar");
                         optionsActivities(id, "ActMoreInfo")
                     });
                     $(".open-folder").click(function () {
-                        var ids = $(this).attr("id_extra");
-                        openFolder(ids, 1);
+                        var ids = $(this).attr("idCar");
+                        var usu = $(this).attr("usuCar");
+                        //alert(ids+"  "+usu);
+                        openFolder(ids,usu, 1);
+                        
                     });
                     $("#back-folder").click(function () {
-                        var ids = $(this).attr("id_extra");
-                        openFolder(ids, 2);
+                        var ids = $(this).attr("idCar");
+                        var usu = $(this).attr("usuCar");
+                        //alert(ids+"  "+usu);
+                        openFolder(ids, usu, 2);
                     });
                 </script>
             }

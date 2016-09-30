@@ -8,6 +8,7 @@ using MProjectWeb.Models.ModelController;
 using MProjectWeb.ViewModels;
 using Newtonsoft.Json;
 
+using MProjectWeb.Models.Lucene;
 
 using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 using MProjectWeb.LuceneIR;
+using MProjectWeb.Models.postgres;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,7 +35,7 @@ namespace MProjectWeb.Controllers
             try
             {
                 long user = Convert.ToInt64(HttpContext.Session.GetString("idUsu"));
-                var x = h.listProjectsUsers(user);
+                //var x = h.listProjectsUsers(user);
                 //  TempData["prj"] = x;
             }
             catch { }
@@ -46,8 +48,36 @@ namespace MProjectWeb.Controllers
             DBCProjects h = new DBCProjects();
             long user = Convert.ToInt64(HttpContext.Session.GetString("idUsu"));
             ViewBag.projects = h.listProjectsUsers(user);
+            HttpContext.Session.SetString("infAct", "");
             return View();
         }
+
+        public IActionResult PublicProjects(string p)
+        {
+            MProjectContext dbMP = new MProjectContext();
+            try
+            {
+                string[] pro = p.Split('-');
+                caracteristicas car = (from x in dbMP.caracteristicas
+                                       where x.keym == Convert.ToInt64(pro[0]) &&
+                                       x.id_usuario == Convert.ToInt64(pro[2]) &&
+                                       x.id_caracteristica == Convert.ToInt64(pro[1])
+                                       select x).First();
+                ViewBag.key = car.keym;
+                ViewBag.idCar = car.id_caracteristica;
+                ViewBag.idUsu = car.id_usuario;
+                //ViewBag.Pagina = car.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio+car.proyectos.First().nombre.ToLower().Replace(" ","")+".html";//ruta 
+                //ViewBag.Pagina = "http://172.16.10.248/prueba%20web/principal1.html";
+            }
+            catch
+            {
+
+            }
+            DBCProjects h = new DBCProjects();
+            ViewBag.projects = h.listPublicProjectsUsers();
+            return View();
+        }
+
 
         //==========================================       VIEWS HELP       ===============================================//
         [HttpPost]
@@ -71,36 +101,77 @@ namespace MProjectWeb.Controllers
             dynamic dat = Request.Form;
             long id = Convert.ToInt64(dat["id_car"]);
             ViewBag.id_car = id;
+            
             return View();
         }
 
         //==========================================   VISTAS SUBOPCIONES   ===============================================//
         public IActionResult Activity()
         {
-
             try
             {
+                ViewBag.usuAct = Convert.ToInt64(HttpContext.Session.GetString("idUsu"));
                 string ax = HttpContext.Session.GetString("id_prj");
-                string[] prj = ax.Split('-'); //[0]=>keym   [1]=>idCarProject
-                long idUsu = Convert.ToInt64(HttpContext.Session.GetString("idUsu"));
-                string keym = prj[0];
+                string[] prj = ax.Split('-'); //[0]=>keym   [1]=>idCarProject     [2]=>idUsuCar
+                long idUsu = Convert.ToInt64(prj[2]);
+                long keym = Convert.ToInt64(prj[0]);
                 ViewBag.id_prj = ax;
+
+                string[] cad = null;
+                long idCar=0;
+                int op=0;
+                long usu=0;
+
                 try
                 {
+                    cad = HttpContext.Session.GetString("infAct").Split('-');
+                }
+                catch { }
 
-                    dynamic dat = new JsonArrayAttribute();
-                    dat = Request.Form;
-                    long idCar = Convert.ToInt64(dat["id_car"]);
-                    HttpContext.Session.SetString("par_car", idCar.ToString());
-                    int op = Convert.ToInt32(dat["opt"]);
+                try
+                {
+                    if (cad != null && cad.Count() >= 2 )
+                    {
+                        idCar =Convert.ToInt64(cad[1]);
+                        HttpContext.Session.SetString("par_car", idCar.ToString());
+                        op = 1;
+                        usu = Convert.ToInt64(cad[2]);
+                        keym = Convert.ToInt64(cad[0]);
+                    }
 
+                    try
+                    {
+                        dynamic dat = new JsonArrayAttribute();
+                        dat = Request.Form;
+                        idCar = Convert.ToInt64(dat["id_car"]);
+                        HttpContext.Session.SetString("par_car", idCar.ToString());
+                        op = Convert.ToInt32(dat["opt"]);
+                        usu = Convert.ToInt32(dat["usu"]);
+                    }
+                    catch
+                    {
+                        if (cad == null || cad.Count() <= 2)
+                        {
+                            idCar = Convert.ToInt64(prj[1]);// prj   -->   [0]=>keym   [1]=>idCarProject
+                            DBCActivities actx = new DBCActivities();
+                            List<ActivityList> act_lstx = actx.getActivityList(idCar, idUsu, keym, 1);
+                            HttpContext.Session.SetString("infAct", act_lstx.First().keyM + "-" + act_lstx.First().parCar + "-" + act_lstx.First().parUsu);
+                            ViewBag.act_lst = act_lstx;
+                            return View();
+                        }
+                    }
+                    
+
+                    
 
                     DBCActivities act = new DBCActivities();
-                    List<ActivityList> act_lst = act.getActivityList(idCar, idUsu, keym, op);
+                    List<ActivityList> act_lst = act.getActivityList(idCar, usu, keym, op);
                     ViewBag.act_lst = act_lst;
                     try
                     {
-                        ViewBag.par = act_lst.First().parCar;
+                        ViewBag.idCar = act_lst.First().parCar;
+                        ViewBag.usuCar = act_lst.First().parUsu;
+                        HttpContext.Session.SetString("infAct", act_lst.First().keyM+"-"+ act_lst.First().parCar+"-"+ act_lst.First().parUsu);
                     }
                     catch
                     {
@@ -110,10 +181,7 @@ namespace MProjectWeb.Controllers
                 }
                 catch
                 {
-                    long idCar = Convert.ToInt64(prj[1]);// prj   -->   [0]=>keym   [1]=>idCarProject
-                    DBCActivities act = new DBCActivities();
-                    List<ActivityList> act_lst = act.getActivityList(idCar, idUsu, keym, 1);
-                    ViewBag.act_lst = act_lst;
+                   
                 }
             }
             catch
@@ -123,21 +191,157 @@ namespace MProjectWeb.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult PublicFiles()
+        {
+            string type="img";
+            string text = "";
+
+            try
+            {
+                dynamic dat = Request.Form;
+                type = dat["type"];
+                text = dat["text"];
+            }
+            catch { }
+
+            LuceneAct lc = new LuceneAct();
+            List<Lucene.Net.Search.ScoreDoc> lstDoc = lc.publicFileSearch(text, type);
+            ViewBag.lstDoc = lstDoc;
+            ViewBag.type = type;
+            ViewBag.searcher = lc.searcher;
+            if (lc.totSear > 0)
+                ViewBag.st = true;
+            else
+                ViewBag.st = false;
+
+            ViewBag.op = "Imagenes";
+            try
+            {
+                string op = type;
+                switch (op)
+                {
+                    case "img":
+                        ViewBag.op = "Imagenes";
+                        break;
+                    case "vid":
+                        ViewBag.op = "Videos";
+                        break;
+                    case "son":
+                        ViewBag.op = "Sonidos";
+                        break;
+                    case "doc":
+                        ViewBag.op = "Documentos";
+                        break;
+                }
+            }
+            catch { }
+
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Files()
         {
             try
             {
-                dynamic dat = Request.Form;
+                long keym;
+                long idCar;
+                long idUsu;
+                string type;
+                string text="";
+                bool pubFil = false;
 
-                ViewBag.idCar = dat["idCar"];
-                ViewBag.idUsu = dat["idUsu"];
-                ViewBag.keym = dat["keym"];
-                ViewBag.type = dat["type"];
+                try
+                {
+                    dynamic dat = Request.Form;
+                    keym = Convert.ToInt64(dat["keym"]);
+                    idCar = Convert.ToInt64(dat["idCar"]);
+                    idUsu = Convert.ToInt64(dat["idUsu"]);
+                    type = dat["type"];
+                    pubFil = Convert.ToBoolean(dat["publicFile"]);
+
+                    ViewBag.keym = keym;
+                    ViewBag.idCar = idCar;
+                    ViewBag.idUsu = idUsu;
+                    ViewBag.type = type;
+
+                    try
+                    {
+                        text = dat["text"];
+                    }
+                    catch { }
+                }
+                catch
+                {
+                    string[] cad = null;
+                    try
+                    {
+                        cad = HttpContext.Session.GetString("infAct").Split('-');
+                    }
+                    catch { }
+                    keym = Convert.ToInt64(cad[0]); 
+                    idCar = Convert.ToInt64(cad[1]);
+                    idUsu = Convert.ToInt64(cad[2]);
+                    type = "img";
+
+                    ViewBag.keym = keym;
+                    ViewBag.idCar = idCar;
+                    ViewBag.idUsu = idUsu;
+                    ViewBag.type = type;
+                }
+                
+                ArchivosMultimedia arc = new ArchivosMultimedia();
+               
+                
+                string car="",usr="";
+                try
+                {
+                    car = arc.getCaracteriscaChildren(keym, idUsu, idCar);
+                    usr = arc.getUsersCaracteristicas(keym, idUsu, idCar);
+                }
+                catch (Exception err){ }
+                
 
                 LuceneAct lc = new LuceneAct();
-                List<Lucene.Net.Search.ScoreDoc> lstDoc = lc.search(dat["text"], dat["type"], "");
-                Lucene.Net.Documents.Document doc = lc.searcher.Doc(lstDoc.ElementAt(0).Doc);
+
+                
+                ViewBag.pubFil = pubFil;
+                List<Lucene.Net.Search.ScoreDoc> lstDoc;
+                if (!pubFil)
+                {
+                    Dictionary<string, string> dt = new Dictionary<string, string>();
+                    dt["usuAct"] = HttpContext.Session.GetString("idUsu");
+
+                    lstDoc = lc.search(dt, text, type, car,usr);
+
+                }
+                else
+                {
+                    lstDoc = lc.publicSearch( text, type, car);
+                }
+                //Lucene.Net.Documents.Document doc = lc.searcher.Doc(lstDoc.ElementAt(0).Doc);
+                ViewBag.op = "Imagenes";
+                try
+                {
+                    string op = type;
+                    switch (op)
+                    {
+                        case "img":
+                            ViewBag.op = "Imagenes";
+                            break;
+                        case "vid":
+                            ViewBag.op = "Videos";
+                            break;
+                        case "son":
+                            ViewBag.op = "Sonidos";
+                            break;
+                        case "doc":
+                            ViewBag.op = "Documentos";
+                            break;
+                    }
+                }
+                catch { }
                 ViewBag.lstDoc = lstDoc;
                 ViewBag.searcher = lc.searcher;
                 if(lc.totSear>0)
@@ -145,7 +349,7 @@ namespace MProjectWeb.Controllers
                 else
                     ViewBag.st = false;
             }
-            catch
+            catch (Exception err)
             {
                 ViewBag.st = false;
             }

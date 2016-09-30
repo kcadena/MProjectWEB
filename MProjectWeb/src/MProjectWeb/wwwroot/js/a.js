@@ -142,12 +142,12 @@ function optionsActivities(id, act) {
 
 ///////////////  Click de los folders  //////////////////////////
 
-function openFolder(car,op) {
-    //alert(car);
+function openFolder(car,usu,op) {
+    //alert("car: "+car+"  usu: "+usu);
     $.ajax({
         url: '/Projects/Activity',
         type: 'POST',
-        data: { id_car: car,opt:op },
+        data: { id_car:car, usu:usu ,opt:op },
         async: true,
         cache: false,
         beforeSend: function () {
@@ -171,37 +171,3 @@ function openFolder(car,op) {
     );
 }
 
-
-//metodo para obtener los archivos de una caracteristica
-function showFiles( keym, usu, car, type, text ) {
-    try {
-        $("#" + act_ant).parent().removeClass('op-active');
-        $("#Files").parent().addClass('op-active');
-        act_ant = "Files";
-    } catch (ex) { }
-    $.ajax({
-        url: '/Projects/Files',
-        type: 'POST',
-        data: { idCar: car, idUsu: usu, keym: keym, type:type, text:text },
-        async: true,
-        cache: false,
-        beforeSend: function () {
-
-            $("#content-opt").html("");
-            $("#content-opt").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
-        },
-        success: function succ(data) {
-            if (data != 0) {
-                $("#content-opt").html("");
-                $("#content-opt").html(data);
-            }
-            else {
-                alert("No se encontraron actividaes relacionadas!!!");
-            }
-        }
-    }).fail(
-       function (da) {
-           alert("No se pudo cargar la pagina.");
-       }
-    );
-}

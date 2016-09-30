@@ -23,12 +23,11 @@
     <!-- Custom Fonts -->
     <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    
     <script src="~/js/multimedia.js"></script>
     <script src="~/js/myajax.js"></script>
-
     <meta http-equiv="Access-Control-Allow-Origin" content="*" />
 </head>
 <body>
@@ -57,11 +56,10 @@
                         }
                     }
                     <li><a asp-controller="Index" asp-action="Index">Inicio</a></li>
-                    <li><a asp-controller="Publishes" asp-action="Publishes">Publicaciones</a></li>
-                    <li><a asp-controller="MultiMedia" asp-action="Pictures">Imagenes</a></li>
-                    <li><a asp-controller="MultiMedia" asp-action="Videos">Videos</a></li>
+                    <li><a asp-controller="Projects" asp-action="PublicProjects" >Publicaciones</a></li>
+                    <li><a href="#" onclick="getDataFiles()">Multimedia</a></li>
                     <li><a asp-controller="MultiMedia" asp-action="Maps">maps</a></li>
-                    <li><a asp-controller="Lucene" asp-action="Index">Lucene</a></li>
+                    <li><a asp-controller="MultiMedia" asp-action="regMap">regMap</a></li>
                     <li>
                         <div class="dropdown">
                             <div class="dropdown-toggle text-center"
@@ -137,7 +135,7 @@
 
         @Html.Partial("~/Views/Account/ModalAccountLogin.cshtml")
         @Html.Partial("~/Views/Account/ModalAccountRegister.cshtml")
-
+        
         @RenderBody()
 
 

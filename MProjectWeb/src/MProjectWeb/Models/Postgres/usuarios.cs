@@ -20,7 +20,7 @@ namespace MProjectWeb.Models.postgres
             recursos = new HashSet<recursos>();
         }
 
-        public int id_usuario { get; set; }
+        public long id_usuario { get; set; }
         public bool administrador { get; set; }
         public string apellido { get; set; }
         public string cargo { get; set; }

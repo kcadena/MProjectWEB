@@ -1,184 +1,115 @@
-﻿@{
-    try
-    {
-        bool st = ViewBag.errLogin;
-        if (st)
+﻿
+
+    @{
+        try
         {
-            <div  >
-                <div class="alert alert-danger fade in center-block" style="position:absolute;width:100%">
-                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    <strong>Error!</strong>No se ha iniciado session. Revise que el usuario y contraseña sean correctos.
+            bool st = ViewBag.errLogin;
+            if (st)
+            {
+                <div>
+                    <div class="alert alert-danger fade in center-block" style="position:absolute;width:100%">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Error!</strong>No se ha iniciado session. Revise que el usuario y contraseña sean correctos.
+                    </div>
+                </div>
+            }
+        }
+        catch { }
+    }
+
+    <div style="background:#333333;">
+        <div class="row center-block" style="margin:0px;width:80%;margin-left:10%">
+            <div class="col-md-4">
+                <div style="color:white;margin-top:200px">
+                    <h1 style="font-size:90px">Mproject</h1>
+                    <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
                 </div>
             </div>
-        }
-    }
-    catch { }
-}
 
-<div style="background:#333333;">
-    <div class="row center-block" style="margin:0px;width:80%;margin-left:10%">
-        <div class="col-md-4">
-            <div style="color:white;margin-top:200px">
-                <h1 style="font-size:90px">Mproject</h1>
-                <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
-            </div>
+
+            <img src="/img/SVG/logoTextMproject.svg"
+                 class="col-md-8 center-block" style="position:relative;" />
         </div>
 
-
-        <img src="/img/SVG/logoTextMproject.svg"
-             class="col-md-8 center-block" style="position:relative;" />
-    </div>
-
-    <div class="row" style="margin:0px;width:80%;margin-left:10%;color:white;position:relative">
-        <!--WEb-->
-        <div class="col-md-4 center-block">
-            <img src="/img/SVG/WebPlat.svg" style="width:50%;height:50%" class="center-block" />
-            <div style="width:80%;" class="center-block">
-                <h2 class="text-center">Entorno Web</h2>
-                <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
+        <div class="row" style="margin:0px;width:80%;margin-left:10%;color:white;position:relative">
+            <!--WEb-->
+            <div class="col-md-4 center-block">
+                <img src="/img/SVG/WebPlat.svg" style="width:50%;height:50%" class="center-block" />
+                <div style="width:80%;" class="center-block">
+                    <h2 class="text-center">Entorno Web</h2>
+                    <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
+                </div>
             </div>
-        </div>
-        <!--Desktop-->
-        <div class="col-md-4 center-block">
-            <img src="/img/SVG/DeskPlat.svg" style="width:50%;height:50%" class="center-block" />
-            <div class="center-block" style="width:80%;">
-                <h2 class="text-center">Multimedia</h2>
-                <p>
-                    Permitete administrar mucho mejor tus contenidos multimedia, los cuales estaran disponibles
-                    en la nube para que puedas acceder a ellos desde cualquier lugar en donde te encuentres.
-                </p>
+            <!--Desktop-->
+            <div class="col-md-4 center-block">
+                <img src="/img/SVG/DeskPlat.svg" style="width:50%;height:50%" class="center-block" />
+                <div class="center-block" style="width:80%;">
+                    <h2 class="text-center">Multimedia</h2>
+                    <p>
+                        Permitete administrar mucho mejor tus contenidos multimedia, los cuales estaran disponibles
+                        en la nube para que puedas acceder a ellos desde cualquier lugar en donde te encuentres.
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <!--Multimedia-->
-        <div class="col-md-4 center-block">
-            <img src="/img/SVG/Multimedia.svg" style="width:50%;height:50%" class="center-block" />
-            <div class="center-block" style="width:80%;">
-                <h2 class="text-center">Multimedia</h2>
-                <p>
-                    Permitete administrar mucho mejor tus contenidos multimedia, los cuales estaran disponibles
-                    en la nube para que puedas acceder a ellos desde cualquier lugar en donde te encuentres.
-                </p>
+            <!--Multimedia-->
+            <div class="col-md-4 center-block">
+                <img src="/img/SVG/Multimedia.svg" style="width:50%;height:50%" class="center-block" />
+                <div class="center-block" style="width:80%;">
+                    <h2 class="text-center">Multimedia</h2>
+                    <p>
+                        Permitete administrar mucho mejor tus contenidos multimedia, los cuales estaran disponibles
+                        en la nube para que puedas acceder a ellos desde cualquier lugar en donde te encuentres.
+                    </p>
+                </div>
             </div>
-        </div>
 
-    </div>
-    <br /><br /><br />
-    <div class="row" style="margin:0px;width:80%;margin-left:10%;color:white;position:relative">
-        <!--Busqueda-->
-        <div class="col-md-4 center-block">
-            <img src="/img/SVG/Search.svg" style="width:50%;height:50%" class="center-block" />
-            <div style="width:80%;" class="center-block">
-                <h2 class="text-center">Busqueda</h2>
-                <p>
-                    MProject cuenta con un sistema avanzado de busqueda de informacion para Imagenes,
-                    Videos, Sonidos y Documentos, de una forma sensilla y eficiente. Ya que no necesitas saber
-                    el nombre completo del archivo para encontrarlo, sino que el sistema al realizar la busqueda
-                    en todos los campos y
-                    mostrara los archivos con mayor puntuacion deacuerdo a la palabra o frase buscada, ya sea
-                    segun el numero
-                    de coincidencias o tambien segun cuan exacta son las palabras o frases a lo que se desea
-                    encontrar.
-                </p>
-            </div>
         </div>
-        <!--Georreferenciacion-->
-        <div class="col-md-4 center-block">
-            <img src="/img/SVG/Georreferenciacion.svg" style="width:50%;height:50%" class="center-block" />
-            <div class="center-block" style="width:80%;">
-                <h2 class="text-center">Georreferenciacion</h2>
-                <p>
-                    Tendras la posibilidad de publicar contenidos como Imgagenes y Videos que se
-                    visulizaran en un mapa virtual, permitiendo que las demas personas las
-                    visualicen a traves de la plataforma web.
-                </p>
+        <br /><br /><br />
+        <div class="row" style="margin:0px;width:80%;margin-left:10%;color:white;position:relative">
+            <!--Busqueda-->
+            <div class="col-md-4 center-block">
+                <img src="/img/SVG/Search.svg" style="width:50%;height:50%" class="center-block" />
+                <div style="width:80%;" class="center-block">
+                    <h2 class="text-center">Busqueda</h2>
+                    <p>
+                        MProject cuenta con un sistema avanzado de busqueda de informacion para Imagenes,
+                        Videos, Sonidos y Documentos, de una forma sensilla y eficiente. Ya que no necesitas saber
+                        el nombre completo del archivo para encontrarlo, sino que el sistema al realizar la busqueda
+                        en todos los campos y
+                        mostrara los archivos con mayor puntuacion deacuerdo a la palabra o frase buscada, ya sea
+                        segun el numero
+                        de coincidencias o tambien segun cuan exacta son las palabras o frases a lo que se desea
+                        encontrar.
+                    </p>
+                </div>
+            </div>
+            <!--Georreferenciacion-->
+            <div class="col-md-4 center-block">
+                <img src="/img/SVG/Georreferenciacion.svg" style="width:50%;height:50%" class="center-block" />
+                <div class="center-block" style="width:80%;">
+                    <h2 class="text-center">Georreferenciacion</h2>
+                    <p>
+                        Tendras la posibilidad de publicar contenidos como Imgagenes y Videos que se
+                        visulizaran en un mapa virtual, permitiendo que las demas personas las
+                        visualicen a traves de la plataforma web.
+                    </p>
 
+                </div>
             </div>
-        </div>
-        <!--Manejo dinamico-->
-        <div class="col-md-4 center-block">
-            <img src="/img/SVG/DynamicProject.svg" style="width:50%;height:50%" class="center-block" />
-            <div class="center-block" style="width:80%;">
-                <h2 class="text-center">Manejo Dinamico</h2>
-                <p>
-                    MProject trabaja con un enfoque orientado a proyectos, permitiendo a las personas naturales
-                    u organizaciones hacer uso de este sistema.
-                    <br />
-                    Con dicho enfoque tendras la posibilidad de planear, organizar y controlar las actividades incluidas
-                    aquellas que se designen a otras personas.
-                </p>
+            <!--Manejo dinamico-->
+            <div class="col-md-4 center-block">
+                <img src="/img/SVG/DynamicProject.svg" style="width:50%;height:50%" class="center-block" />
+                <div class="center-block" style="width:80%;">
+                    <h2 class="text-center">Manejo Dinamico</h2>
+                    <p>
+                        MProject trabaja con un enfoque orientado a proyectos, permitiendo a las personas naturales
+                        u organizaciones hacer uso de este sistema.
+                        <br />
+                        Con dicho enfoque tendras la posibilidad de planear, organizar y controlar las actividades incluidas
+                        aquellas que se designen a otras personas.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-<link href="~/css/Index.css" rel="stylesheet" />
-<div id="area" class="row" style="">
-</div>
-<script type="text/javascript">
-
-    @* @if (@ViewBag.Pagina != null)
-    {
-        @:myajax('@ViewBag.key', '@ViewBag.idCar', '@ViewBag.idUsu');
-                                    @:$("#area").load("@ViewBag.Pagina");
-                                }*@
-
-
-
-    $.ajax({
-
-        // The 'type' property sets the HTTP method.
-        // A value of 'PUT' or 'DELETE' will trigger a preflight request.
-        type: 'GET',
-
-        // The URL to make the request to.
-        url: 'D:\UDENAR\BOOKS\ORGANIGRAMA2012vf.pdf',
-
-        // The 'contentType' property sets the 'Content-Type' header.
-        // The JQuery default for this property is
-        // 'application/x-www-form-urlencoded; charset=UTF-8', which does not trigger
-        // a preflight. If you set this value to anything other than
-        // application/x-www-form-urlencoded, multipart/form-data, or text/plain,
-        // you will trigger a preflight request.
-        contentType: 'text/plain',
-
-        xhrFields: {
-            // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
-            // This can be used to set the 'withCredentials' property.
-            // Set the value to 'true' if you'd like to pass cookies to the server.
-            // If this is enabled, your server must respond with the header
-            // 'Access-Control-Allow-Credentials: true'.
-            withCredentials: false
-        },
-
-        headers: {
-
-            // Set any custom headers here.
-            // If you set any non-simple headers, your server must include these
-            // headers in the 'Access-Control-Allow-Headers' response header.
-        },
-
-        success: function (d) {
-            // Here's where you handle a successful response.
-            alert(d);
-        },
-
-        error: function () {
-            // Here's where you handle an error response.
-            // Note that if the error was due to a CORS issue,
-            // this function will still fire, but there won't be any additional
-            // information about the error.
-        }
-    });
-
-
-</script>

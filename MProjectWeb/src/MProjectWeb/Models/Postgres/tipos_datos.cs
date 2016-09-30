@@ -10,7 +10,7 @@ namespace MProjectWeb.Models.postgres
             meta_datos = new HashSet<meta_datos>();
         }
 
-        public int id_tipo_dato { get; set; }
+        public long id_tipo_dato { get; set; }
         public string descripcion { get; set; }
 
         public virtual ICollection<meta_datos> meta_datos { get; set; }

@@ -4,20 +4,16 @@
 
 @using Microsoft.AspNet.Http;
 @{
-    Layout = null;
+    Layout = "~/views/shared/_layout.cshtml";
 }
 
-@Html.Partial("~/Views/MultiMedia/MapReg.cshtml")
 @Html.Partial("~/Views/MultiMedia/MapSingle.cshtml")
 
-
 @{
-    bool pubFil = false;
     string tp = "img";
     try
     {
         tp = ViewBag.type;
-        pubFil = ViewBag.pubFil;
     }
     catch
     {
@@ -27,7 +23,7 @@
 
 
 <script src="~/js/maps.js"></script>
-<div style="">
+<div style="" id="area">
     <div class="row" style="position:relative;margin:0px">
         <div class="row col-md-7" style="position:relative">
             <h1 class="page-header col-md-8">
@@ -78,65 +74,32 @@
     <br /><br /><br />
 
     @{
-        if (pubFil)
-        {
-
+       
             <script>
             //Acciones que generan los click de los botones de las opciones
             $("#btnImg").click(function () {
-                publicShowFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "img", "");
+                publicFiles("img","");
             });
             $("#btnVid").click(function () {
-                publicShowFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "vid", "");
+                publicFiles("vid","");
             });
             $("#btnSou").click(function () {
-                publicShowFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "son", "");
+                publicFiles("son","");
             });
             $("#btnDoc").click(function () {
-                publicShowFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "doc", "");
+                publicFiles("doc","");
             });
             </script>
 
-        }
-        else
-        {
-
-            <script>
-            //Acciones que generan los click de los botones de las opciones
-            $("#btnImg").click(function () {
-                showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "img", "");
-            });
-            $("#btnVid").click(function () {
-                showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "vid", "");
-            });
-            $("#btnSou").click(function () {
-                showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "son", "");
-            });
-            $("#btnDoc").click(function () {
-                showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "doc", "");
-            });
-            </script>
-
-        }
+      
     }
 
     @{
-        if (pubFil)
-        {
             <script>
             $("#btnSearch").click(function () {
-                publicShowFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "@tp", $("#inpText").val());
+                publicShowFiles("@tp", $("#inpText").val());
             });
             </script>
-        }
-        else
-        {
-            <script>
-            $("#btnSearch").click(function () {
-                showFiles("@ViewBag.keym", "@ViewBag.idUsu", "@ViewBag.idCar", "@tp", $("#inpText").val());
-            });
-            </script>
-        }
     }
 
     <div class="row">

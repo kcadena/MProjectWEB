@@ -5,12 +5,14 @@ namespace MProjectWeb.Models.postgres
 {
     public partial class proyectos_meta_datos
     {
-        public string keym { get; set; }
-        public int id_proyecto_meta_dato { get; set; }
-        public int id_usuario { get; set; }
+        public long keym { get; set; }
+        public long id_proyecto_meta_dato { get; set; }
+        public long id_usuario { get; set; }
         public DateTime fecha_ultima_modificacion { get; set; }
-        public int id_proyecto { get; set; }
+        public long id_proyecto { get; set; }
+        public long id_usuario_pro { get; set; }
         public bool is_title { get; set; }
+        public long keym_pro { get; set; }
         public string tipo { get; set; }
         public string valor { get; set; }
 

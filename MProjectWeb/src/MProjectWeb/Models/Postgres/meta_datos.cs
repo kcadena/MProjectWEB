@@ -10,12 +10,12 @@ namespace MProjectWeb.Models.postgres
             plantillas_meta_datos = new HashSet<plantillas_meta_datos>();
         }
 
-        public string keym { get; set; }
-        public int id_meta_dato { get; set; }
-        public int id_usuario { get; set; }
+        public long keym { get; set; }
+        public long id_meta_dato { get; set; }
+        public long id_usuario { get; set; }
         public string descripcion { get; set; }
         public DateTime fecha_ultima_modificacion { get; set; }
-        public int id_tipo_dato { get; set; }
+        public long id_tipo_dato { get; set; }
         public bool meta_dato_ir { get; set; }
 
         public virtual ICollection<plantillas_meta_datos> plantillas_meta_datos { get; set; }

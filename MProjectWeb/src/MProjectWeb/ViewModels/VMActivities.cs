@@ -8,8 +8,9 @@ namespace MProjectWeb.ViewModels
     public class ActivityList
     {
         public long idCar { get; set; }
-        public long idUsu { get; set; }
         public long idAct { get; set; }
+        public long usuCar { get; set; }
+        public long parUsu { get; set; }
         public long parCar { get; set; }
 
         public string keyM { get; set; }

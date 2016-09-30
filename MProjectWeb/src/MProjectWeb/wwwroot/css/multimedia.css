@@ -1,61 +1,69 @@
 ﻿body {
- padding-top: 50px;
+    padding-top: 50px;
 }
 
 
 /*===================================================   Pictures   ===================================================*/
 
-   .mlt-cont{
-        margin:auto;
-        width:80%;
-    }
-
-
-.pics-pub{
-    position:relative;
-    width:95%;
-    margin:auto
+.mlt-cont {
+    margin: auto;
+    width: 80%;
 }
 
-.pic-min{
-    position:relative;
-   
+
+.pics-pub {
+    position: relative;
+    width: 95%;
+    margin: auto;
 }
-body {
-  padding-top: 50px;
+
+.pic-min {
+    position: relative;
 }
- 
+
+
 /* Aparesca texto mouse hoever*/
 .thumbnail {
-    position:relative;
-    overflow:hidden;
+    position: relative;
+    overflow: hidden;
 }
- 
+
 .caption {
-    position:absolute;
-    top:0;
-    right:0;
-    background:rgba(0, 17, 60, 0.71);
-    width:100%;
-    height:100%;
-    padding:2%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 17, 60, 0.71);
+    width: 100%;
+    height: 100%;
+    padding: 2%;
     display: none;
-    text-align:center;
-    color:#fff !important;
-    z-index:2;
+    text-align: center;
+    color: #fff !important;
+    z-index: 2;
 }
 
 .content {
-    width:600px;
-    height:400px;
-    line-height:400px;
-    margin:0px auto;
-    text-align:center;
-    background-color:#CCCCCC;
+    width: 600px;
+    height: 400px;
+    line-height: 400px;
+    margin: 0px auto;
+    text-align: center;
+    background-color: #CCCCCC;
 }
 
-img{
-    vertical-align:middle
+img {
+    vertical-align: middle;
+}
+
+
+/*===================================================   Modal    ===================================================*/
+/*modal*/
+@media(min-width:768px) {
+    .modal{
+        position:absolute;
+        height:100%;
+        width:100%
+    }
 }
 
 /*===================================================   Videos   ===================================================*/
@@ -64,7 +72,9 @@ img{
 
 /*===================================================   Sonidos   ===================================================*/
 
-
+audio {
+    background-color: #000000;
+}
 
 
 /*===================================================   Documentos   ===================================================*/
