@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using MProjectWeb.Models.postgres;
 using Microsoft.AspNet.Http;
+using MProjectWeb.Models.ModelController;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,14 +19,21 @@ namespace MProjectWeb.Controllers
             //MProjectDeskSQLITEContext dbMP = new MProjectDeskSQLITEContext();
 
             ViewBag.errLogin = false;
+
             try
             {
                 bool st = (bool)TempData["err"];
                 ViewBag.errLogin = st;
             }
             catch { }
-            
-            
+            try
+            {
+                bool st = (bool)TempData["errReg"];
+                ViewBag.errRegister = st;
+            }
+            catch { }
+
+
             ViewData["Title"] = "Mproject";
 
            
@@ -41,6 +49,42 @@ namespace MProjectWeb.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Index","Index");
         }
-        
+
+        public IActionResult Links(string cad)
+        {
+            bool st = false;
+            try
+            {
+                ViewBag.ids = cad;
+                if (cad != null)
+                {
+                    st = true;
+                }
+            }
+            catch { }
+            List<string> lst = getAllLinks();
+            ViewBag.lst = lst;
+            ViewBag.st = st;
+            return View();
+        }
+
+        //Obtiene todos los links que existen en la base de datos
+        public List<string> getAllLinks()
+        {
+            try
+            {
+               
+
+                DBCActivities act = new DBCActivities();
+                List<string> lst = act.getAllLinks();
+                return lst;
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
     }
 }

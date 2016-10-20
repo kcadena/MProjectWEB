@@ -83,8 +83,8 @@ namespace MProjectWeb.Models.Lucene
                 List<caracteristicas> lstcar = db.caracteristicas.Where(x =>
                     x.keym_padre == keym &&
                     x.id_usuario_padre == usu &&
-                    x.id_caracteristica_padre == idCar &&
-                    x.visualizar_superior == true
+                    x.id_caracteristica_padre == idCar 
+                    //&&  x.visualizar_superior == true
                 ).ToList();
                 try
                 {

@@ -6,7 +6,6 @@
     Layout = "/views/Shared/_Layout.cshtml";
 }
 
-
 <link href="~/css/Index.css" rel="stylesheet" />
 <div id="aux" keym="" idUsu="" idCar="">
 </div>
@@ -108,10 +107,10 @@
                                     </a>
                                 </div>
                             </div>
-                        }
-                    }
-                }
-                catch { }
+                                                        }
+                                                    }
+                                                }
+                                                catch { }
             }
 
             <div class="col-lg-4 col-md-4" id="panel_prj">
@@ -126,26 +125,37 @@
             var car = s[1];
             var usu = s[2];
             var src = $(this).parent().attr('src');
-            //alert("keym:  " + keym + "  car:  " + xcar + "   usu:  " + usu);
-            //alert(s[0]);
-            $("#area").load(src);
-            
-           //alert(s);
+
+            for (var i = 0; i < src.length; i++) {
+                src = src.replace(' ', '_');
+            }
+
+            //$("#area").load(src);
+
+			$.ajax({
+				url: src,
+				dataType: 'html',
+				success: function(data){
+					$('#area').html(data);
+				}
+			});
+
+
             myajax(keym, car, usu);
         });
     </script>
 </div>
 
 
+@if (@ViewBag.Pagina != null)
+{
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <script type="text/javascript">
+        myajax('@ViewBag.key', '@ViewBag.idCar', '@ViewBag.idUsu');
+        var s = "@ViewBag.Pagina";
+        s = s.replace("&#xF1;", "ñ");
+        alert(s);
+        $("#area").load(s);
+    </script>
+}
 
-<script type="text/javascript">
-
-     @if (@ViewBag.Pagina != null)
-     {
-        @:myajax('@ViewBag.key', '@ViewBag.idCar', '@ViewBag.idUsu');
-        @:$("#area").load("@ViewBag.Pagina");
-     }
-
-
-
-</script>

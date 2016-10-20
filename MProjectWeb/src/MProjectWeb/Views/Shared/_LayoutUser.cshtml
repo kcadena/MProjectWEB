@@ -14,10 +14,11 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<meta http-equiv="Access-Control-Allow-Origin" content="*" />*@
+
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -38,8 +39,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="~/js/multimedia.js"></script>
-    
+
+
     <link href="~/css/multimedia.css" rel="stylesheet" />
 
 </head>
@@ -100,6 +101,23 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
                         @Context.Session.GetString("UsuNam")
+                        @*<script>
+                            function trimString(str, maxLen) {
+                                if (str.length <= maxLen) {
+                                    return str;
+                                }
+                                var trimmed = str.substr(0, maxLen);
+                                return trimmed.substr(0, trimmed.lastIndexOf(' ')) + '…';
+                            }
+
+                            // Let's test it
+
+                            sentenceOne = "too short";
+                            sentencetwo = "more than the max length";
+
+                            alert(trimString(sentenceOne, 15));
+                            alert(trimString(sentencetwo, 15));
+                                                </script>*@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
@@ -153,12 +171,12 @@
                                         }
                                     </ul>
                                 </li>
-                            }
-                            catch (Exception ERR) { }
-                        }
+                                                }
+                                                catch (Exception ERR) { }
+                                            }
                     }
 
-                   
+
                     <li>
                         <a asp-controller="Projects" asp-action="Index" class="abt"><i class="fa fa-fw fa-dashboard"></i> About</a>
                     </li>
@@ -178,15 +196,16 @@
         <div id="page-wrapper">
 
             <div class="container-fluid" id="content-opt" style="min-height:600px">
-                
+
                 @RenderBody()
-               
+
             </div>
             <!-- /.container-fluid -->
 
         </div>
     </div>
-
+    <br />
+    <br />
     <div class="panel-footer" id="footer-ly">
         <p class="text-center">
             Desarrollado por Kelvin Cadena & David Estrada

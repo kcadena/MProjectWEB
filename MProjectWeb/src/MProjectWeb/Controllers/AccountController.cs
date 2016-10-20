@@ -15,6 +15,10 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using System.Net.Mail;
+using System.Net;
+
+
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,6 +36,8 @@ namespace MProjectWeb.Controllers
         [HttpPost]
         public IActionResult Login(usuarios q)
         {
+
+          
             Dictionary<string, string> dat = new Dictionary<string, string>();
             dat["email"] = q.e_mail;
             dat["pass"] = q.pass;
@@ -46,23 +52,38 @@ namespace MProjectWeb.Controllers
             return RedirectToAction("Index", "Index");
         }
 
+       
         [HttpPost]
         public IActionResult Register(ViewModels.usuarios q)
         {
+
             if (ModelState.IsValid)
             {
+                DBCUsuarios dbUsu = new DBCUsuarios();
                 usuarios usu = new usuarios();
 
-                usu.apellido = q.apellido;
                 usu.nombre = q.nombre;
+                usu.apellido = q.apellido;
                 usu.e_mail = q.e_mail;
                 usu.pass = q.pass;
-                usu.id_usuario =(int) q.id_usuario;
-
+                usu.genero = q.genero;
+                usu.entidad = q.entidad;
+                usu.cargo = q.cargo;
+                usu.telefono = q.telefono;
+                usu.administrador = false;
+                int i = 0;
+                bool st = false;
                 try
                 {
-                    db.usuarios.Add(usu);
-                    db.SaveChanges();
+                   for( i = 0; i < 5; i++)
+                    {
+                        usu.id_usuario = dbUsu.regUser(usu);
+                        if (usu.id_usuario != -1)
+                        {
+                            i = 5;
+                            st = true;
+                        }
+                    }
                 }
                 catch
                 {
@@ -70,21 +91,96 @@ namespace MProjectWeb.Controllers
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return RedirectToAction("Index", "Index", q);
                 }
+                
+                if(!st)
+                {
+                    q.aux = true;
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    TempData["errReg"] = true;
+                    return RedirectToAction("Index", "Index");
+                }
+                else
+                {
+                    try
+                    {
+                        string cont = "Bienvenido: para confirmar su registro a MProject por favor ingrese a: <br>" +
+                            "<a href='http://localhost:5000/account/userActivate?id=" + usu.id_usuario + "'>Confirmar</a>";
+                        sendEmail(usu.e_mail,cont,"Confirmacion MProject");
 
-                HttpContext.Session.SetString("UsuNam", q.nombre + " " + q.apellido);
-                HttpContext.Session.SetString("idUsu", q.id_usuario.ToString());
-                return RedirectToAction("Index", "Projects");
+                        HttpContext.Session.SetString("estReg", "true");
+                    }
+                    catch {
+                        HttpContext.Session.SetString("estReg", "false");
+                    }
+                    return RedirectToAction("Index", "Index");
+                }
             }
             else
             {
                 q.aux = true;
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return RedirectToAction("Index", "Index", q);
+                //TempData["errReg"] = true;
+                //return RedirectToAction("Index", "Index");
+                //q.aux = true;
+                //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                //return RedirectToAction("Index", "Index", q);
+                return View(q);
             }
         }
 
+        public IActionResult userActivate(long id)
+        {
+            DBCUsuarios us = new DBCUsuarios();
+            try
+            {
+                usuarios q = us.userActivate(id);
+                HttpContext.Session.SetString("UsuNam", q.nombre + " " + q.apellido);
+                HttpContext.Session.SetString("idUsu", q.id_usuario.ToString());
+                return RedirectToAction("Index","Projects");
+            }
+            catch
+            {
+                //HttpContext.Session.SetString("estReg", "false");
+                return RedirectToAction("Index", "Index");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> fogetPassword(string email)
+        {
+            DBCUsuarios usr = new DBCUsuarios();
+            string pass = usr.forgetPassword(email.ToString());
+            string cont="Apreciado/a Su nueva clave para MProject es:   "+pass;
+            sendEmail(email.ToString(),cont,"Recuperacion clave MProject");
+            HttpContext.Session.SetString("estPass", "true");
+            return Redirect("/Index/Index");
+        }
+
+
+        //Metodos auxiliares
+
+        //envio de correo electronico
+        private async void  sendEmail(string email,string content,string subject)
+        {
+            SmtpClient SmtpServer = new SmtpClient("smtp.live.com");
+            var mail = new MailMessage();
+            mail.From = new MailAddress("aslan310593@hotmail.com");
+            mail.To.Add(email);
+            mail.Subject = subject;
+            mail.IsBodyHtml = true;
+            string htmlBody;
+            htmlBody = content;
+            mail.Body = htmlBody;
+            SmtpServer.Port = 587;
+            SmtpServer.UseDefaultCredentials = false;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("aslan310593@hotmail.com", "310593LIVE");
+            SmtpServer.EnableSsl = true;
+            SmtpServer.Send(mail);
+        }
        
     }
+
+    
 }
 
 

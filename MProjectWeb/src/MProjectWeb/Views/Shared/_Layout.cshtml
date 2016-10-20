@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNet.Http;
+﻿@using Microsoft.AspNet.Http;
 @model MProjectWeb.ViewModels.usuarios
 @{
     bool signIn = false;
@@ -12,8 +11,13 @@
 }
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="es"  xml:lang="es" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<meta http-equiv="Access-Control-Allow-Origin" content="*" />*@
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
@@ -25,10 +29,9 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    
     <script src="~/js/multimedia.js"></script>
     <script src="~/js/myajax.js"></script>
-    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    
 </head>
 <body>
     <!-- Fixed navbar -->
@@ -56,10 +59,11 @@
                         }
                     }
                     <li><a asp-controller="Index" asp-action="Index">Inicio</a></li>
-                    <li><a asp-controller="Projects" asp-action="PublicProjects" >Publicaciones</a></li>
-                    <li><a href="#" onclick="getDataFiles()">Multimedia</a></li>
+                    <li><a asp-controller="Projects" asp-action="PublicProjects" >Proyectos</a></li>
+                    <li><a href="#" onclick="getDataFiles()">Archivos</a></li>
                     <li><a asp-controller="MultiMedia" asp-action="Maps">maps</a></li>
-                    <li><a asp-controller="MultiMedia" asp-action="regMap">regMap</a></li>
+                    @*<li><a asp-controller="MultiMedia" asp-action="regMap">regMap</a></li>*@
+                    <li><a href="#" id="allLinks" >Links</a></li>
                     <li>
                         <div class="dropdown">
                             <div class="dropdown-toggle text-center"
@@ -132,16 +136,18 @@
         </div>
     </nav>
     <div id="datPag">
-
+        @Html.Partial("~/Views/Account/ModalAccountForgetPass.cshtml")
         @Html.Partial("~/Views/Account/ModalAccountLogin.cshtml")
         @Html.Partial("~/Views/Account/ModalAccountRegister.cshtml")
-        
+        @Html.Partial("~/views/index/modallink.cshtml")
+
         @RenderBody()
 
 
     </div>
 
-    <div class="panel-footer">
+
+    <div class="panel-footer" >
         <p class="text-center">
             Desarrollado por Kelvin Cadena & David Estrada
             <br />
@@ -154,5 +160,8 @@
 <div id="scrip">
 </div>
 <script src="~/js/a.js"></script>
+<script>
+ 
+</script>
 
 </html>

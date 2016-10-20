@@ -58,11 +58,102 @@ img {
 
 /*===================================================   Modal    ===================================================*/
 /*modal*/
-@media(min-width:768px) {
-    .modal{
-        position:absolute;
-        height:100%;
-        width:100%
+/* All links => tamaño responsive del model que contiene todos los links */
+.md-dl-link {
+    width: 80%;
+    align-items: center;
+    margin: 10px 10% 0 10%;
+    padding: 0px;
+}
+
+#loadInfo {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+@media(max-width:768px) {
+    #loadInfo {
+        overflow-x: auto;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        white-space: nowrap;
+    }
+
+    .md-dl-link {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+
+/* Login modal responsive */
+.md-dl-login {
+    width: 60%;
+    min-height: 500px;
+    height: auto;
+    margin-top: 10%;
+    align-items: center;
+}
+
+#mod-log-desc {
+    position: relative;
+    width: 300px;
+    margin-left: 10%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#mod-log-tit {
+    position: relative;
+    width: 300px;
+    margin-left: 10%;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 60px;
+}
+
+#mod-log-tit2 {
+    font-size: 20px;
+    color: gray;
+    margin-top: -25px;
+    margin-left: 75px;
+}
+
+@media(max-width:768px) {
+    .po {
+        visibility: collapse;
+        height: 0px;
+    }
+
+    #mod-log-desc {
+        position: relative;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #mod-log-tit {
+        position: relative;
+        width: 90%;
+        margin-left: 5%;
+        font-size: 40px;
+    }
+
+    #mod-log-tit2 {
+        font-size: 20px;
+        color: gray;
+        margin-top: 0px;
+        margin:0px;
+        text-align:center
+    }
+
+    .md-dl-login {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
     }
 }
 
@@ -80,6 +171,28 @@ audio {
 /*===================================================   Documentos   ===================================================*/
 
 
+#selBack {
+    margin: 0px 5px 0px 5px;
+    background-color: #f58417;
+    text-align: right;
+}
+
+.selItems:hover {
+    cursor: pointer;
+}
+
+/*===================================================   slider QHAPAQ   ===================================================*/
+
+.img-slide {
+    min-height: 550px;
+    max-height: 550px;
+}
 
 
-
+@media(max-width:768px) {
+    #pdfFile {
+        position: relative;
+        width: 96%;
+        margin-left: 2%;
+    }
+}

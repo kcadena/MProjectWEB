@@ -14,7 +14,7 @@ namespace MProjectWeb.Models.postgres
         public long id_meta_dato { get; set; }
         public long id_usuario { get; set; }
         public string descripcion { get; set; }
-        public DateTime fecha_ultima_modificacion { get; set; }
+        public string fecha_ultima_modificacion { get; set; }
         public long id_tipo_dato { get; set; }
         public bool meta_dato_ir { get; set; }
 

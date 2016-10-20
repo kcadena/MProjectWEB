@@ -1,6 +1,7 @@
-﻿
+﻿@using Microsoft.AspNet.Http;
 
     @{
+        //error al iniciar cesion
         try
         {
             bool st = ViewBag.errLogin;
@@ -15,13 +16,87 @@
             }
         }
         catch { }
+        //Mensaje acerca del registro exitoso=> verificar correo o no se ha registrado 
+        try
+        {
+            string cad = Context.Session.GetString("estReg");
+            if (cad.Length > 0)
+            {
+                bool stR = Convert.ToBoolean(cad);
+                if (stR)
+                {
+                    <div>
+                        <div class="alert alert-success fade in center-block" style="position:absolute;width:100%">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>Exito!</strong> Se ha registrado existosamente. En su correo electronico se encuentra el link de confirmacion.
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <div class="alert alert-success fade in center-block" style="position:absolute;width:100%">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>Error!</strong> No se ha registrado. Intentelo mas tarde
+                        </div>
+                    </div>
+
+                }
+                Context.Session.SetString("estReg", "");
+            }
+        }
+        catch { }
+        //cambio exitoso de contraseña
+        try
+        {
+            string cad = Context.Session.GetString("estPass");
+            if (cad.Length > 0)
+            {
+                bool stR = Convert.ToBoolean(cad);
+                if (stR)
+                {
+                    <div>
+                        <div class="alert alert-success fade in center-block" style="position:absolute;width:100%">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>Exito!</strong> En su correo electronico se encuentra su nueva clave de acceso al sistema.
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <div class="alert alert-success fade in center-block" style="position:absolute;width:100%">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>Error!</strong> No se ha podido recuperar su contraseña. Intentelo mas tarde
+                        </div>
+                    </div>
+
+                }
+                Context.Session.SetString("estPass","");
+            }
+        }
+        catch { }
+        try
+        {
+            bool st = ViewBag.errRegister;
+            if (st)
+            {
+                <div>
+                    <div class="alert alert-danger fade in center-block" style="position:absolute;width:100%">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Error! </strong> No se ha podido realizar el registro, el correo que ha utilizado ya se encuentra registrado.
+                    </div>
+                </div>
+            }
+        }
+        catch { }
     }
 
     <div style="background:#333333;">
         <div class="row center-block" style="margin:0px;width:80%;margin-left:10%">
             <div class="col-md-4">
                 <div style="color:white;margin-top:200px">
-                    <h1 style="font-size:90px">Mproject</h1>
+                    <h1 id="index-tit" >Mproject</h1>
                     <p>Es una plataforma que te permitira administar de una mejor forma tus proyectos.</p>
                 </div>
             </div>

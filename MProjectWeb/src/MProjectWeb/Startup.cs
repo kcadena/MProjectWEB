@@ -8,6 +8,7 @@ using Microsoft.AspNet.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
+using Microsoft.AspNet.Mvc;
 
 namespace MProjectWeb
 {
@@ -34,17 +35,19 @@ namespace MProjectWeb
 
             services.AddEntityFramework()
                 .AddNpgsql();
-
+            
             services.AddMvc();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-
+            
             app.UseIISPlatformHandler();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseDeveloperExceptionPage();
             //app.UseDirectoryBrowser();
             app.UseMvc(routes =>
             {
@@ -54,7 +57,7 @@ namespace MProjectWeb
                     );
 
             });
-
+            app.UseCors("AllowSpecificOrigin");
         }
 
         // Entry point for the application.

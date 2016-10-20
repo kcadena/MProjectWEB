@@ -8,7 +8,7 @@ namespace MProjectWeb.Models.postgres
         public long keym { get; set; }
         public long id_proyecto_meta_dato { get; set; }
         public long id_usuario { get; set; }
-        public DateTime fecha_ultima_modificacion { get; set; }
+        public string fecha_ultima_modificacion { get; set; }
         public long id_proyecto { get; set; }
         public long id_usuario_pro { get; set; }
         public bool is_title { get; set; }

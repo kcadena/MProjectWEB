@@ -11,7 +11,7 @@ namespace MProjectWeb.Models.postgres
         public string contenido { get; set; }
         public string descripcion { get; set; }
         public DateTime fecha_carga { get; set; }
-        public DateTime fecha_ultima_modificacion { get; set; }
+        public string fecha_ultima_modificacion { get; set; }
         public long id_caracteristica { get; set; }
         public long id_usuario_car { get; set; }
         public long keym_car { get; set; }

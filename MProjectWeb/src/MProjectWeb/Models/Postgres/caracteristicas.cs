@@ -20,16 +20,16 @@ namespace MProjectWeb.Models.postgres
         public long id_usuario { get; set; }
         public int? costos { get; set; }
         public string estado { get; set; }
-        public DateTime? fecha_fin { get; set; }
-        public DateTime? fecha_inicio { get; set; }
-        public DateTime fecha_ultima_modificacion { get; set; }
+        public string fecha_fin { get; set; }
+        public string fecha_inicio { get; set; }
+        public string fecha_ultima_modificacion { get; set; }
         public long? id_caracteristica_padre { get; set; }
         public long? id_usuario_padre { get; set; }
         public long? keym_padre { get; set; }
         public int porcentaje_asignado { get; set; }
         public int porcentaje_cumplido { get; set; }
         public int? presupuesto { get; set; }
-        public int? presupuesto_restante { get; set; }
+       // public int? presupuesto_restante { get; set; }
         public bool? publicacion_web { get; set; }
         public int? recursos { get; set; }
         public int? recursos_restantes { get; set; }

@@ -4,9 +4,10 @@
         data: { "key": key, "idcar": idcar, "usu": usu },
         type: 'GET',
         dataType: "json",
+        crossDomain: true,
         //async: true,
         success: function (e) {
-           
+            //alert("OK");
             try {
 
                 document.getElementById("aux").setAttribute("keym", key);
@@ -21,10 +22,22 @@
                     var sep = val.split("-");
                     var idcom = sep[0].split(",");
                     //alert(sep[1]);
-                    var ht = '<li><a id="' + sep[1] + '">' + sep[1] + '</a></li>';
-                    //var sc = "<script type='text/javascript'> $('#" + sep[1] + "').click(function() { myajax('" + idcom[0] + "','" + idcom[1] + "','" + idcom[2] + "');  $('#area').load('ht tp://172.16.10.248/prueba%20web/" + sep[1] + ".html'); }); <\/script>";
+                    var id = sep[1];
+                    for (var i = 0; i < id.length; i++) {
+                        id = id.replace(' ', '_');
+                    }
+                    for (var i = 0; i < sep[2].length; i++) {
+                        sep[2] = sep[2].replace(' ', '_');
+                    }
 
-                    var sc = "<script type='text/javascript'> $('#" + sep[1] + "').click(function() { myajax('" + idcom[0] + "','" + idcom[1] + "','" + idcom[2] + "');  $('#area').load('" + sep[2] + "'); }); <\/script>";
+                    if (sep[1] == "Atras") {
+                        var ht = '<li class="selItems" id="selBack"><a id="' + id + '">' + sep[1] + '</a></li>';
+                    }
+                    else {
+                        var ht = '<li class="selItems" ><a id="' + id + '">' + sep[1] + '</a></li>';
+                    }
+
+                    var sc = "<script type='text/javascript'> $('#" + id + "').click(function() { myajax('" + idcom[0] + "','" + idcom[1] + "','" + idcom[2] + "');  $('#area').load('" + sep[2] + "'); }); <\/script>";
                 
                     $("#activityList").append(ht);
                     $("#scrip").append(sc);
@@ -32,15 +45,12 @@
                 
                 
                 });
-
-                //$("#area") = sep[2];
-
-                
-
             } catch (err) {
-
+                alert(err);
             }
             
         }
+    }).fail(function () {
+        alert("error");
     });
 }

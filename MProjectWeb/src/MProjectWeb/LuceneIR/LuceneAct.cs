@@ -40,7 +40,7 @@ namespace MProjectWeb.LuceneIR
         public LuceneAct()
         {
             //Setup indexer
-            directory = FSDirectory.Open(@"D:\RepositoriosMProject\lucene\");
+            directory = FSDirectory.Open(@"C:\MP\RepositoriosMProject\lucene\");
             analyzer = new SnowballAnalyzer(Lucene.Net.Util.Version.LUCENE_30, "Spanish");
             sp = new SpanishStemmer();
             sp.Stem();

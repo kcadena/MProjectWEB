@@ -61,7 +61,7 @@ namespace MProjectWeb.Models.ModelController
                         id_usu = x.id_usuario_car,
                         keym = x.keym,
                         desc = x.descripcion,
-                        ruta = x.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio + "/" +
+                        ruta = x.id_usuarioNavigation.repositorios_usuarios.ruta_repositorio +
                         x.nombre
                         + ".html"
                     }

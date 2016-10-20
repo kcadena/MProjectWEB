@@ -4,7 +4,6 @@
 
 #index-div {
     /*margin-left:10%;*/
-    
     /*background: white;*/ /* For browsers that do not support gradients */
     /*background: -webkit-linear-gradient(gray, white);*/ /* For Safari 5.1 to 6.0 */
     /*background: -o-linear-gradient(gray, white);*/ /*For Opera 11.1 to 12.0 */
@@ -51,9 +50,15 @@
     margin: auto;
 }
 
-
+#index-tit {
+    font-size: 90px;
+}
 
 @media(max-width:768px) {
+    #index-tit {
+        font-size: 50px;
+    }
+
     #btn_account {
         position: relative;
         width: 125px;
@@ -68,19 +73,19 @@
 
     .slider_font_tit {
         font-family: 'Lora', serif;
-        font-size: 40px;
+        font-size: 20px;
         position: relative;
         margin-top: calc(-50% + 50px);
     }
 
     .slider_font_cont {
         font-family: 'Lora', serif;
-        font-size: 20px;
+        font-size: 150px;
         color: #d7d7d7;
     }
 
     .imgs_pag_principar {
-        vertical-align:middle;
+        vertical-align: middle;
         position: absolute;
         width: 100%;
     }
@@ -89,18 +94,19 @@
         width: 92%;
         margin: auto;
     }
+
     #back-folder {
-            background-color:aqua;
-            margin-left:-100px;
-        }
+        background-color: aqua;
+        margin-left: -100px;
+    }
 }
 
-.imgs_pag_principar{
-  position:relative;
-  width:100%;
+.imgs_pag_principar {
+    position: relative;
+    width: 100%;
 }
 
-.row{
-    margin-left:0px;
-    margin-right:0px;
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
 }

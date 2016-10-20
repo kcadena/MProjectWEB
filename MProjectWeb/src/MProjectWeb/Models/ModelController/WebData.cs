@@ -6,14 +6,24 @@ using Microsoft.AspNet.Mvc.Formatters.Json;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNet.Hosting;
 
 namespace MProjectWeb.Models.ModelController
 {
     public class WebData
     {
+        private readonly IHostingEnvironment _hostEnvironment;
         public JObject defaultUser()
         {
-            JObject o1 = JObject.Parse(File.ReadAllText(@"C:\Users\admi\Desktop\Trabajo de grado\PROGRAMMING\Project.Management\MProjectWEB\MProjectWeb\src\MProjectWeb\Models\ModelController\WebData.json"));
+            JObject o1;
+            try
+            {
+                o1 = JObject.Parse(File.ReadAllText(_hostEnvironment + "json/WebData.json"));
+            }
+            catch
+            {
+                o1 = JObject.Parse(File.ReadAllText(_hostEnvironment + "json/WebData.json"));
+            }
             return o1;
         }
     }

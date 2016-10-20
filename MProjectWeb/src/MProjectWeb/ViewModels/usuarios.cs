@@ -8,12 +8,11 @@ namespace MProjectWeb.ViewModels
 {
     public partial class usuarios
     {
-        [Required]
+
+
+
         [Display(Name = "ID")]
         public long id_usuario { get; set; }
-        [Required]
-        [Display(Name = "Apellido")]
-        public string apellido { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -21,14 +20,32 @@ namespace MProjectWeb.ViewModels
         [Required]
         [Display(Name = "Nombre")]
         public string nombre { get; set; }
-
+        [Required]
+        [Display(Name = "Apellido")]
+        public string apellido { get; set; }
         [Required]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string pass { get; set; }
+        [Required]
+        [Display(Name = "Cargo")]
+        public string cargo { get; set; }
+        [Required]
+        [Display(Name = "Entidad")]
+        public string entidad { get; set; }
+        [Required]
+        [Display(Name = "Genero")]
+        public string genero { get; set; }
+        [Display(Name = "Imagen")]
+        public string imagen { get; set; }
+        [Required(ErrorMessage ="Es requerido")]
 
-       
-     
+        [Display(Name = "Telefono")]
+        [DataType(DataType.PhoneNumber)]
+        public string telefono { get; set; }
+
+
+        public bool administrador { get; set; }
         public bool aux { get; set; }
 
     }

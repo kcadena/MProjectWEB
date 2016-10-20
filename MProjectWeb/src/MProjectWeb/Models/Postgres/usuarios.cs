@@ -32,6 +32,9 @@ namespace MProjectWeb.Models.postgres
         public string pass { get; set; }
         public string telefono { get; set; }
 
+        public bool disponible { get; set; }
+        public string codigo_recuperacion { get; set; }
+
         public virtual ICollection<actividades> actividades { get; set; }
         public virtual ICollection<caracteristicas> caracteristicas { get; set; }
         public virtual ICollection<caracteristicas> caracteristicasNavigation { get; set; }

@@ -1,14 +1,21 @@
 ﻿//,    "dnxcore50": { }
 //permite hacer el cambio del modal login a register y viceversa
 $(".btn_log").click(function () {
-    
+    $("#modal_forget").modal("hide");
     $("#modal_reg").modal("hide");
     $("#modal_log").modal();
 });
 
 $(".btn_reg").click(function () {
+    $("#modal_forget").modal("hide");
     $("#modal_log").modal("hide");
     $("#modal_reg").modal();
+});
+
+$(".btn_forget").click(function () {
+    $("#modal_log").modal("hide");
+    $("#modal_reg").modal("hide");
+    $("#modal_forget").modal();
 });
 
 //vriables para las opciones en side-nav
@@ -63,9 +70,9 @@ function callOpt(con, act, sel) {
     $.ajax({
         url: '/' + con + '/' + act,
         type: 'POST',
-        data: {},
+        dataType: "text",
         async: true,
-        cache: false,
+        //cache: false,
         beforeSend: function () {
 
             $("#content-opt").html("");
@@ -78,7 +85,7 @@ function callOpt(con, act, sel) {
         }
     }).fail(
        function (da) {
-           //alert("No se pudo cargar la pagina.");
+           alert("No se pudo cargar la pagina.");
        }
     );
 
@@ -91,14 +98,14 @@ function projectsClick(dat) {
     $.ajax({
         url: '/Projects/PanelProject',
         type: "POST",
-        //dataType: "json",
+        dataType: "text",
         data: dat,
         //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 
-        // cache: false,
+        // //cache: false,
         //datType: "json",
         //async: true,
-        cache: false,
+        ////cache: false,
         beforeSend: function () {
             $("#panel_prj").html("");
             $("#panel_prj").html('<img src="/img/ajax-loader.gif" style="position:relative;margin-left:50%;margin-top:20%;height:8%;width:8%;">');
@@ -125,7 +132,7 @@ function optionsActivities(id, act) {
         type: 'POST',
         data: { id_car: id },
         async: true,
-        cache: false,
+        //cache: false,
         beforeSend: function () {
 
             $("#content-opt").html("");
@@ -149,7 +156,7 @@ function openFolder(car,usu,op) {
         type: 'POST',
         data: { id_car:car, usu:usu ,opt:op },
         async: true,
-        cache: false,
+        //cache: false,
         beforeSend: function () {
 
            // $("#content-opt").html("");
@@ -171,3 +178,25 @@ function openFolder(car,usu,op) {
     );
 }
 
+
+
+
+
+
+$("#allLinks").click(function () {
+    try {
+
+        var keym = document.getElementById("aux").getAttribute("keym");
+        var idUsu = document.getElementById("aux").getAttribute("idUsu");
+        var idCar = document.getElementById("aux").getAttribute("idCar");
+
+        //alert(keym+" "+idCar+" "+idUsu);
+        $("#modalLink").modal();
+        ajaxAllLinks1(keym, idCar, idUsu);
+        // alert("OK");
+
+    } catch (err) {
+        $("#modalLink").modal();
+        ajaxAllLinks2();
+    }
+});

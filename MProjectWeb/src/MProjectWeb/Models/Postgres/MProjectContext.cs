@@ -8,6 +8,7 @@ namespace MProjectWeb.Models.postgres
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseNpgsql(@"PORT=5432;TIMEOUT=15;POOLING=True;MINPOOLSIZE=1;MAXPOOLSIZE=20;COMMANDTIMEOUT=20;PASSWORD=123;USERID=postgres;HOST=localhost;DATABASE=MProject");
+            //options.UseNpgsql(@"PORT=5432;TIMEOUT=15;POOLING=True;MINPOOLSIZE=1;MAXPOOLSIZE=20;COMMANDTIMEOUT=20;PASSWORD=NJpost2016;USERID=postgres;HOST=190.254.4.6;DATABASE=MProjectPru");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -276,6 +277,11 @@ namespace MProjectWeb.Models.postgres
                 entity.Property(e => e.pass)
                     .IsRequired()
                     .HasColumnType("varchar");
+
+                entity.Property(e => e.disponible)
+                   .HasColumnType("bool");
+                entity.Property(e => e.codigo_recuperacion)
+                   .HasColumnType("varchar");
 
                 entity.Property(e => e.telefono).HasColumnType("varchar");
             });

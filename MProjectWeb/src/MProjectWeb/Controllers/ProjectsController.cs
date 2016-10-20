@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 
 using MProjectWeb.LuceneIR;
 using MProjectWeb.Models.postgres;
+using Microsoft.AspNet.Cors;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -85,7 +86,8 @@ namespace MProjectWeb.Controllers
                     ViewBag.key = car.keym;
                     ViewBag.idCar = car.id_caracteristica;
                     ViewBag.idUsu = car.id_usuario;
-                    ViewBag.Pagina = car.ruta_repositorio + car.nombre.ToLower().Replace(" ", "") + ".html";//ruta 
+                    ViewBag.Pagina = car.ruta_repositorio + car.nombre.ToLower().Replace(" ", "_") + ".html";//ruta 
+                    return View();
                 }
                 catch
                 {
@@ -107,7 +109,8 @@ namespace MProjectWeb.Controllers
                     ViewBag.key = car.keym;
                     ViewBag.idCar = car.id_caracteristica;
                     ViewBag.idUsu = car.id_usuario;
-                    ViewBag.Pagina = car.ruta_repositorio + car.nombre.ToLower().Replace(" ", "") + ".html";//ruta 
+                    ViewBag.Pagina = car.ruta_repositorio + car.nombre.Replace(" ", "_") + ".html";//ruta 
+                    return View();
 
                 }
                 //ViewBag.Pagina = "http://172.16.10.248/prueba%20web/principal1.html";
@@ -422,6 +425,7 @@ namespace MProjectWeb.Controllers
             return wd.defaultUser();
         }
         [HttpGet]
+        //Obtiene los links (1 nivel) asociados a una caracteristicas segun publicacion web
         public List<string> getLinks(long key,long idcar,long usu)
         {
             try
@@ -440,5 +444,6 @@ namespace MProjectWeb.Controllers
             }
             
         }
+       
     }
 }
